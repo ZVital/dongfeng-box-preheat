@@ -1,0 +1,54 @@
+# Сборка
+app/build/
+app/*.apk
+app/*.keystore
+*.jks
+
+# Вендорские бинарники: чужая интеллектуальная собственность.
+# Они нужны для анализа, но в репозитории им не место.
+/car-apk/
+/car-apk-partial/
+/car-lists/
+/car-sys/
+/launcher/
+/recon/
+recon.sh
+fetch-apks.sh
+/apk_dump/
+/backup/
+/byprev/
+/preheat/
+*/*.dex
+*.dexdump
+*.apk
+*.arsc
+*.so
+
+# Рабочие каталоги с разборами
+/chat/
+*.dexdump
+
+# Личные данные: переписка закрытого чата не публикуется
+ChatExport_*/
+rb_chat.txt
+ovms_*.txt
+ovms_*.md
+*.pdf
+box_by.txt
+box_manual.txt
+box_BY_spec.pdf
+
+# Диагностика
+*.log
+t_*.sh
+v.sh
+cleanup.sh
+restore.sh
+dumpclimate.sh
+capture-*.sh
+
+# macOS / IDE
+.DS_Store
+.idea/
+*.iml
+.vscode/
