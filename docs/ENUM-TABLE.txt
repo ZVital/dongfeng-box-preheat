@@ -1,0 +1,1287 @@
+ENUM ORPHANS — climate control enums in com.qinggan.canbus (Launcher-release.apk)
+source: /Users/vitalizavala/Work/tmp/box/launcher/launcher.dexdump
+ordinals: from <clinit> invoke-direct {v0,v1,v2,v3} <init>(Ljava/lang/String;II)V — arg3=ordinal, arg4=value
+VERIFY ordinals: AC_HAZE_MODE=47 AC_ONE_BUTTON_WARMTH_MODE=48 AC_RAPID_COOLING_MODE=49 (expected 47/48/49) OK
+VERIFY field count: VehicleState constants 488 == static fields of type VehicleState 488 OK
+ui_used=yes requires sget-object/iput-object of that field inside a class of com/qinggan/app/launcher,
+  com/qinggan/car, com/qinggan/settings, com/qinggan/app/setting; per-model subclass references
+  (S31VehicleState etc.) count as UI usage of the base constant.
+
+=== BLOCK 1: com.qinggan.canbus.VehicleState (enum, 488 constants) ===
+CONSTANT_NAME ordinal=<N> ui_used=<yes|no> setter=<yes|no>   setter: setVehicleState(VehicleState;I)V
+# CONSTANT_NAME                                     ordinal  ui_used setter  via
+ASR                                               0   no     yes    
+TyresSpeedWarning                                 1   no     yes    
+TyresSpeed                                        2   no     yes    
+TyrePressureMonitoring                            3   no     yes    
+AdaptiveCruiseControlSystem                       4   no     yes    
+DriverAlertSystem                                 5   no     yes    
+LastVehicleDistance                               6   no     yes    
+FrontAssistSet                                    7   no     yes    
+PrevWarning                                       8   no     yes    
+DisplayDistanceWarning                            9   no     yes    
+LaneKeepingAssist                                10   no     yes    
+TravelProgramme                                  11   no     yes    
+VehicleDistance                                  12   no     yes    
+ParkingAutoActive                                13   no     yes    
+ParkingFrontVolume                               14   no     yes    
+ParkingFrontTone                                 15   no     yes    
+ParkingBackVolume                                16   no     yes    
+ParkingBackTone                                  17   no     yes    
+LightOpenedTime                                  18   no     yes    
+AutomaticHeadlightControl                        19   no     yes    
+LaneChangeFlash                                  20   no     yes    
+InstrumentSwitchLighting                         21   no     yes    
+ComingHomeFunction                               22   no     yes    
+LeavingHomeFunction                              23   no     yes    
+TravelMode                                       24   no     yes    
+DoorAmbientLight                                 25   no     yes    
+FootWellLight                                    26   no     yes    
+DynamicBigLight                                  27   no     yes    
+DynamicBigLightAssistance                        28   no     yes    
+SynchronousAdjustment                            29   no     yes    
+LowerWhileReversing                              30   no     yes    
+AutomaticWipingInRain                            31   no     yes    
+RearWindowWipingInReverseGear                    32   no     yes    
+ParkingOverlapMirror                             33   no     yes    
+ConvenienceOpening                               34   no     yes    
+DoorUnlocking                                    35   no     yes    
+SpeedLimit                                       36   no     yes    
+AutomaticLocking                                 37   no     yes    
+FCWSensitivity                                   38   yes    yes    S31VehicleState
+TSRSwitch                                        39   no     yes    
+AutoWelcomeLampSwitch                            40   no     yes    
+AutoWindUnlockSet                                41   no     yes    
+NaviTurn                                         42   no     yes    
+PositionLamp                                     43   yes    yes    S31VehicleState
+AutoWindKeyPressSet                              44   no     yes    
+AutoWindLockSet                                  45   no     yes    
+MP5ProfileSet                                    46   no     yes    
+AC_HAZE_MODE                                     47   no     yes    
+AC_ONE_BUTTON_WARMTH_MODE                        48   yes    yes    D53VehicleState
+AC_RAPID_COOLING_MODE                            49   yes    yes    D53VehicleState
+AC_RAIN_SNOW_MODE                                50   yes    yes    D53VehicleState
+AC_BABY_CARE_MODE                                51   yes    yes    D53VehicleState
+AC_ROMANTIC_MODE                                 52   no     yes    
+AC_SMOKING_MODE                                  53   no     yes    
+AC_STOP_CAR_MODE                                 54   yes    yes    S31VehicleState
+DaytimeRunninglights                             55   no     yes    
+RKELockFeedbackSwitch                            56   no     yes    
+RKEFunction                                      57   no     yes    
+ShutdownAutoUlockFunction                        58   no     yes    
+ShutdownAutoUlockSwitch                          59   no     yes    
+AutoCloseWindowsFunction                         60   no     yes    
+AutoCloseWindowsMode                             61   no     yes    
+PositionLightAutoCloseFunction                   62   no     yes    
+PositionLightAutoCloseSwitch                     63   no     yes    
+RVMAutoFoldingSwitch                             64   no     yes    
+RVMFunction                                      65   no     yes    
+RainingAutoCloseWindowsFunction                  66   no     yes    
+RainingAutoCloseWindowsSwitch                    67   no     yes    
+SunroofFunction                                  68   no     yes    
+SunroofControl                                   69   no     yes    
+LDWFunction                                      70   no     yes    
+LDWSwitch                                        71   yes    yes    S31VehicleState
+LDWStatus                                        72   no     yes    
+LDWWaringValue                                   73   yes    yes    S31VehicleState
+IHBCFunction                                     74   no     yes    
+IHBCSwitch                                       75   no     yes    
+IHBCStatus                                       76   no     yes    
+FCWFunction                                      77   no     yes    
+FCWSwitch                                        78   yes    yes    S31VehicleState
+AEBFunction                                      79   no     yes    
+AEBSwitch                                        80   yes    yes    S31VehicleState
+EPSFunction                                      81   no     yes    
+EPSModeSelection                                 82   no     yes    
+SendDateTimetoICUFunction                        83   no     yes    
+SendDateTimetoICUSwitch                          84   no     yes    
+STEERING_WHEEL_HEATING_SWITCH                    85   no     yes    
+LEFT_SEAT_VALICATION_LEVEL                       86   no     yes    
+RIGHT_SEAT_VALICATION_LEVEL                      87   no     yes    
+CLEAN_AIR_ACTIVE_SWITCH                          88   no     yes    
+CLEAN_AIR_LEVEL                                  89   no     yes    
+OPS_MUTE_SWITCH                                  90   no     yes    
+OPS_SURFACE_POP_SWITCH                           91   no     yes    
+OPS_DRAG_CAR_CONNECTION_SWITCH                   92   no     yes    
+RDK_CALIBRATION_TYRE_SWITCH                      93   no     yes    
+HEAD_LIGHT_STATUS                                94   no     yes    
+RVC_REVER_LIGHT_SWITCH                           95   no     yes    
+STEERING_WHEEL_HEATING_SWITCH_OPERABILITY        96   no     yes    
+HEAD_LIGHT_STATUS_OPERABILITY                    97   no     yes    
+RADAR_PRODE_COUNT                                98   no     yes    
+OPS_MUTE_SWITCH_OPERABILITY                      99   no     yes    
+DAY_LIGHT_SWITCH                                100   no     yes    
+SUNROOF_RKESETTING_SWITCH                       101   no     yes    
+SUNROOFROLLSHADE_CONTROLSELECT                  102   no     yes    
+WINDOW_VENTILATE_RKESETTING                     103   no     yes    
+USER_DET_SEND_SWITCH                            104   no     yes    
+OBC_HOUR_START_SETTING                          105   no     yes    
+OBC_MINUTE_START_SETTING                        106   no     yes    
+OBC_HOUR_END_SETTING                            107   no     yes    
+OBC_MINUTE_END_SETTING                          108   no     yes    
+OBC_CANCEL_SIGNAL_SWITCH                        109   no     yes    
+OBC_SET_SIGNAL_SWITCH                           110   no     yes    
+USER_REMOTE_BOOT_FEED_SWITCH                    111   no     yes    
+LOW_POWER_SET_SWITCH                            112   no     yes    
+BMS_BATT_SOC_STATUS                             113   no     yes    
+SAFETY_TONE_SWITCH                              114   no     yes    
+PARKING_ASSISTANCE_SWITCH                       115   no     yes    
+ENERGY_RECOVERY_GEAR                            116   no     yes    
+DOOR_OPENING_TONE_SWITCH                        117   no     yes    
+ENERGY_CONSUM_HISTORY                           118   no     yes    
+ENERGY_CON_SUM_AV                               119   no     yes    
+ENERGY_FLOW                                     120   no     yes    
+BSD_SYSTEM_SWITCH                               121   no     yes    
+BSD_OP_Status                                   122   no     yes    
+TIME_CHARGING_SWITCH                            123   no     yes    
+LDW_WARNING_TYPE                                124   no     yes    
+LOW_POWER_TONE_SWITCH                           125   no     yes    
+MCU_ALARM_LEVEL_STATUS                          126   no     yes    
+SYS_LANGUAGE                                    127   no     yes    
+SIGNAL_PEDL_SWITCH                              128   no     yes    
+WARM_SWITCH                                     129   no     yes    
+VEHICLE_DOOR_CONTROL                            130   no     yes    
+VEHICLE_IGNITION_SWITCH                         131   no     yes    
+SIGNAL_PEDL_STATUS                              132   no     yes    
+WARM_STATUS                                     133   no     yes    
+LKS_LANE_AID_TYPE_REQ                           134   no     yes    
+LDW_LKS_SENSITIVITY                             135   no     yes    
+PGS_SWITCH                                      136   no     yes    
+PEDE_PROT_SWITCH                                137   no     yes    
+HAM_REQ_SWITCH                                  138   no     yes    
+TSR_REQ_SWITCH                                  139   no     yes    
+LKSStatus                                       140   no     yes    
+TSRStatus                                       141   no     yes    
+DRIVER_WINDOW_CONTROL                           142   no     yes    
+PAS_WIDOW_CONTROL                               143   no     yes    
+LEFT_BACK_WINDOW_CONTROL                        144   no     yes    
+RIGHT_BACK_WINDOW_CONTROL                       145   no     yes    
+ALL_WINDOW_CONTROL                              146   no     yes    
+ALL_LEFT_WINDOW_CONTROL                         147   no     yes    
+ALL_RIGHT_WINDOW_CONTROL                        148   no     yes    
+ALL_FRONT_WINDOW_CONTROL                        149   no     yes    
+ALL_REAR_WINDOW_CONTROL                         150   no     yes    
+SUNROOF_TITL_CONTROL                            151   no     yes    
+VEHICLE_TUNK_CONTROL                            152   no     yes    
+HIGH_BEAM                                       153   no     yes    
+LOW_BEAM                                        154   yes    yes    S31VehicleState
+PARK_LIGHT                                      155   no     yes    
+FRONT_FOG_LIGHT                                 156   no     yes    
+REAR_FOG_LIGHT                                  157   yes    yes    S31VehicleState,VehicleState(direct)
+RIGHT_DIRECTION_LIGHT                           158   no     yes    
+LEFT_DIRECTION_LIGHT                            159   no     yes    
+FRONT_WASHER_WIPER                              160   no     yes    
+FRONT_WASHER_WIPER_STATUS                       161   no     yes    
+REAR_WINDOWN_HEAT_STATUS                        162   no     yes    
+REAR_WASHER_WIPER                               163   no     yes    
+ATMOSPHERE_LAMP_GRADS                           164   no     yes    
+AVN_KEY_REARDEF                                 165   no     yes    
+FRONT_WIPER                                     166   no     yes    
+MP5_WORK_SWITCH                                 167   no     yes    
+TAILGATE_DELAY_COLSE_TIMING                     168   no     yes    
+IC_STYLE_WITCH                                  169   no     yes    
+KICK_FUNCTION_ENABLE_SWITCH                     170   no     yes    
+IC_STYLE_SETTING_LEFT                           171   no     yes    
+IC_STYLE_SETTING_RIGHT                          172   no     yes    
+ELECTRIC_TAILGATE_SWITCH                        173   no     yes    
+WALK_LOCK_SWITCH                                174   no     yes    
+HDC_SWITCH                                      175   no     yes    
+SEAT_WELCOM_SWITCH                              176   no     yes    
+MAIN_SCREEN_BRIGHTNESS                          177   no     yes    
+THEME_CHANGE                                    178   no     yes    
+VEHICLE_AMBIENTLIGHTBRIGHTNESS_SWITCH           179   yes    yes    S31VehicleState
+VEHICLE_AMBIENTLIGHTBRIGHTNESS_COLOR            180   yes    yes    S31VehicleState
+VEHICLE_AMBIENTLIGHTBRIGHTNESS_LEVEL            181   yes    yes    S31VehicleState
+FOLLOW_ME_HOME_SETTING                          182   no     yes    
+PM2_5_SWITCH                                    183   no     yes    
+TAILGATEDOORLOCK_ENABLE_SWITCH                  184   no     yes    
+BCMDOORLOCK                                     185   no     yes    
+ADVANCEDPARKMODE                                186   no     yes    
+ADVANCEDPARKASSIST                              187   no     yes    
+ADV_REQUSETDISPLY                               188   no     yes    
+GW_ESC_VEHSPDVALIDFLAG                          189   no     yes    
+ESC_ABSALARMSIG                                 190   no     yes    
+GW_ESC_VEHSPD                                   191   no     yes    
+DEVICE_POWER                                    192   no     yes    
+GEARSHIFTREMIND_FC_ENABLE_SWITCH                193   no     yes    
+VOICE_CONTROL_SUNROOF_SWITCH                    194   no     yes    
+DRIVING_LOKING_FC_SWITCH                        195   no     yes    
+TRUNK_AUTO_LOKING_FC_SWITCH                     196   no     yes    
+LOCK_FAIL_SOUND_SWITCH                          197   no     yes    
+LOCK_SUCCESS_SOUND_SWITCH                       198   no     yes    
+LDW_ENABLE_STAUS                                199   no     yes    
+HMA_STATUS                                      200   no     yes    
+FRONT_SEAT_HEATING_COMMAND_RIGHT                201   no     yes    
+FRONT_SEAT_HEATING_COMMAND_LEFT                 202   no     yes    
+FRONT_SEAT_VENTILATION_COMMAND_RIGHT            203   no     yes    
+FRONT_SEAT_VENTILATION_COMMAND_LEFT             204   no     yes    
+TSR_WARNING_TYPE                                205   no     yes    
+INSTRUMENTS_BRIGHTNESS_MODE_DAY                 206   yes    yes    D53VehicleState,S31VehicleState
+INSTRUMENTS_BRIGHTNESS_MODE_NIGHT               207   yes    yes    D53VehicleState,S31VehicleState
+TIRE_PRESSURE_RESET                             208   no     yes    
+NAVI_SPEED_LIMIT_MILE                           209   no     yes    
+NAVI_SPEED_LIMIT_KM                             210   no     yes    
+BMS_VEH_MODE                                    211   no     yes    
+BMS_OBC_REM_TIME                                212   no     yes    
+SIDEVIEW_CONTROL                                213   no     yes    
+CHARGE_RATE                                     214   no     yes    
+ENERGY_FLOW_LEVEL                               215   no     yes    
+BATT_OBC_TIME                                   216   no     yes    
+TSR_SWITCH                                      217   no     yes    
+HMA_ON_OFF_REQ                                  218   no     yes    
+TSR_OPERATING_STATUS                            219   no     yes    
+TSR_SPEED_LIMIT                                 220   no     yes    
+TSR_SIGN_TYPE                                   221   no     yes    
+TSR_SPEED_LIMIT_UNIT                            222   no     yes    
+TSR_WARNING                                     223   no     yes    
+TSR_SWITCH_RESPONSE                             224   no     yes    
+FCW_STATUS                                      225   no     yes    
+AEB_STATUS                                      226   no     yes    
+PEDE_PROT_STATUS                                227   no     yes    
+FCW_SWITCH                                      228   no     yes    
+AEB_SWITCH                                      229   no     yes    
+ESC_OFF_STATUS                                  230   yes    yes    S31VehicleState
+READY_LAMP                                      231   no     yes    
+ONE_KM_FLAG                                     232   no     yes    
+BCM_RCM_ERROR                                   233   no     yes    
+COMBINATION_LIGHT_SWITCH                        234   no     yes    
+ALL_SEAT_HEATING_SWITCH                         235   no     yes    
+ALL_SEAT_VENTILATION_SWITCH                     236   no     yes    
+FRONT_SEAT_HEATING_BATTERY_STATUS               237   no     yes    
+AVM_CALIBRATE_START                             238   no     yes    
+PHYSICAL_KEY_LIGHT_CONTROL_STATUS               239   no     yes    
+PHYSICAL_KEY_FRONT_WIPER_CONTROL_STATUS         240   no     yes    
+PHYSICAL_KEY_FRONT_WASHER_CONTROL_STATUS        241   no     yes    
+PHYSICAL_KEY_REAR_WASHER_CONTROL_STATUS         242   no     yes    
+PHYSICAL_KEY_HIGH_LIGHT_CONTROL_STATUS          243   no     yes    
+LITTLE_LIGHT_STATUS                             244   no     yes    
+TAILGATE_OPEN_CTRL_REQ                          245   no     yes    
+TAILGATE_COLSE_CTRL_REQ                         246   no     yes    
+SEAT_MEMORY_SET_REQ                             247   no     yes    
+SEAT_MEMORY_USE_REQ                             248   no     yes    
+SUNSHADING_CURTAIN_REQ                          249   no     yes    
+FOG_LIGHT                                       250   no     yes    
+WARNING_LIGHT                                   251   no     yes    
+ADAPTIVE_CRUISE_CONTROL_SWITCH                  252   no     yes    
+ADAPTIVE_CRUISE_CONTROL_SIGNAL_STATUS           253   no     yes    
+CANBUS_LOG_ENABLE                               254   no     yes    
+DVR_PASSWORD_RESET                              255   no     yes    
+IACC_OR_ACC_FUNCTION_SWITCH                     256   no     yes    
+IACC_OR_ACC_STATUS                              257   no     yes    
+COMBINATION_VEHICLE_REQ1                        258   no     yes    
+COMBINATION_VEHICLE_REQ2                        259   no     yes    
+COMBINATION_VEHICLE_REQ3                        260   no     yes    
+MPU_SET_WEATHER                                 261   no     yes    
+FLK_SYSTEM_SWITCH                               262   no     yes    
+VEHICLE_RESET                                   263   no     yes    
+SEAT_POSITION_CHANGE                            264   no     yes    
+SET_SEAT_USERACCOUNT                            265   no     yes    
+ECO_SWITCH                                      266   no     yes    
+SPORT_MODE_SWITCH                               267   no     yes    
+SEAT_MASSAGE_MODE_REQ                           268   no     yes    
+SEAT_MASSAGE_INTENSITY_REQ                      269   no     yes    
+DRIVING_MODE_MEMORY_SWITCH                      270   no     yes    
+SEAT_VENTILATION_AUTO_OPEN_SWITCH               271   no     yes    
+SEAT_MASSAGE_KEY_FEEDBACK                       272   no     yes    
+TREND_WELCOME_UNLOCK_WITCH                      273   no     yes    
+TREND_WELCOME_LAMP_SWITCH                       274   no     yes    
+APA_SWITCH                                      275   no     yes    
+SEAT_VENTILATE_AUTO_SWITCH                      276   no     yes    
+ISA_MODE                                        277   no     yes    
+LDW_WARNING_MODE                                278   no     yes    
+AIR_OUTLET_MAX_REQ                              279   no     yes    
+AIR_DRIVER_SEAT_OUTLET_REQ                      280   no     yes    
+AIR_PASSENGER_SEAT_OUTLET_REQ                   281   no     yes    
+AIR_DRIVER_SEAT_REM_REQ                         282   no     yes    
+AIR_PASSENGER_SEAT_REM_REQ                      283   no     yes    
+AIR_LEFT_LR_POS_REQ                             284   no     yes    
+AIR_LEFT_UD_POS_REQ                             285   no     yes    
+AIR_LEFT_MID_LR_POS_REQ                         286   no     yes    
+AIR_LEFT_MID_UD_POS_REQ                         287   no     yes    
+AIR_RIGHT_MID_LR_POS_REQ                        288   no     yes    
+AIR_RIGHT_MID_UD_POS_REQ                        289   no     yes    
+AIR_RIGHT_LR_POS_REQ                            290   no     yes    
+AIR_RIGHT_UD_POS_REQ                            291   no     yes    
+MFTS_AC_MAX_AC                                  292   no     yes    
+MFTS_AC_OUTLET_AUTO                             293   no     yes    
+ADP_POPUP_WINDOW_REQUEST                        294   no     yes    
+MASSAGE_SAFE_MODE_SWITCH                        295   no     yes    
+AVAS_PAUSE_SWITCH                               296   yes    yes    S31VehicleState,VehicleState(direct)
+UPA_SWITCH                                      297   no     yes    
+OTA_MODE_STATUS                                 298   no     yes    
+BSD_SOUND_SWITCH                                299   no     yes    
+ADAS_SEG_EFFSPLMT                               300   no     yes    
+ANTI_FORGREMIND_SWITCH                          301   no     yes    
+ADP_INSTANT_WARMING_MODEST                      302   yes    yes    X37AVehicleState
+ICA_STATUS                                      303   no     yes    
+LKA_SWITCH_STATE                                304   no     yes    
+IHBC_SWITCH                                     305   yes    yes    S31VehicleState
+KICK_FUNCTION_STATE                             306   no     yes    
+ELECTRIC_TAILGATE_FUNCTION_STATE                307   no     yes    
+TAILGATE_POSITION                               308   no     yes    
+LKA_MODE                                        309   no     yes    
+LKA_MAIN_SW                                     310   no     yes    
+ISA_MAIN_SW                                     311   no     yes    
+FCW_SENSITIVITY                                 312   no     yes    
+CWP_SWITCH                                      313   yes    yes    S31VehicleState
+MP5_VBC_MODE                                    314   no     yes    
+MP5_BBINCAR_MODE                                315   no     yes    
+MP5_MUTE                                        316   no     yes    
+MP5_SURROUND_MODE                               317   no     yes    
+CWP_OPERATING_STATUS                            318   no     yes    
+CWP_FAILURE_STATUS                              319   no     yes    
+CWP_RD_OPERATING_STATUS                         320   no     yes    
+CWP_RD_DEVICE_TYPE                              321   no     yes    
+CWP_RD_FORGOTTEN_REMINDER                       322   no     yes    
+BSD_CALIBRATE                                   323   no     yes    
+BSD_CALIBRATE_RESULT_LEFT                       324   no     yes    
+BSD_CALIBRATE_RESULT_RIGHT                      325   no     yes    
+MP5_REQ_AVM                                     326   no     yes    
+AVM_LOG_STATUS                                  327   no     yes    
+AVM_FAULT                                       328   no     yes    
+MP5_DMS_SYSTEM_ENABLE                           329   no     yes    
+MP5_DMS_EYEFATIGUE_MONITOR                      330   no     yes    
+MP5_DMS_SENSITY                                 331   no     yes    
+MP5_DMS_MONITOR_LONGTIME_DRIVE                  332   no     yes    
+MP5_DMS_MONITOR_SIDE_VIEW                       333   no     yes    
+MP5_DMS_MONITOR_USING_PHONE                     334   no     yes    
+MP5_DMS_MONITOR_SOMKING                         335   no     yes    
+MP5_DMS_MONITOR_DRINK_WATER                     336   no     yes    
+MP5_DMS_USERACCOUNT                             337   no     yes    
+MP5_BSD_LCW_SWITCH                              338   no     yes    
+MP5_JA_SWITCH                                   339   no     yes    
+MP5_FCTA_SWITCH                                 340   no     yes    
+MP5_TLC_MODE                                    341   no     yes    
+MP5_LSS_MODE                                    342   no     yes    
+MP5_DOW_SWITCH                                  343   no     yes    
+MP5_RCTA_SWITCH                                 344   no     yes    
+MP5_MULTIMODE_SWITCH                            345   no     yes    
+MP5_ESA_SWITCH                                  346   no     yes    
+ENM_LKAS_OPERATING_STATUS                       347   no     yes    
+ENM_PARKING_ASSIST_STATUS                       348   no     yes    
+ENM_PARKING_ASSIST_PROGRESS                     349   no     yes    
+ENM_PARKING_ASSIST_PROGRESS_STATUS              350   no     yes    
+ENM_PARKING_ASSIST_INFORMATION_DISPLAY_REQUEST   351   no     yes    
+HOPE_OPEN_RAIN_SNOW_MODE                        352   no     yes    
+AVM_DYNAMIC_GUIDES_SET_REQUEST                  353   no     yes    
+AVM_VEHICLE_COLOR_SET_REQUEST                   354   no     yes    
+AVM_OPERATING_MODE_CONTROL_SET_REQUEST          355   no     yes    
+AVM_TRUN_TRIGGER_SET_REQUEST                    356   no     yes    
+FIRST_START_TO_SPRING_AVM_SET_REQUEST           357   no     yes    
+AVM_SYSTEM_ERROR_STATUS                         358   no     yes    
+AVM_VIEW_MODE_SET_STATUS                        359   no     yes    
+ENM_PARKING_ASSIST_INFORMATION_DISPLAY_STATUS   360   no     yes    
+ENM_PARK_ASSISTANT_SOUND_CADENCE_COMMAND        361   no     yes    
+MP5_INTELLIGENT_SWITCH                          362   no     yes    
+MP5_INTELLIGENT_MODE                            363   no     yes    
+MP5_INTELLIGENT_TORQUE_COEF                     364   no     yes    
+ECU_INTELLIGENT_TORQUE_COEF                     365   no     yes    
+DRIVING_MODE                                    366   no     yes    
+MP5_LOCK_CMD_WINDOW_SWITCH                      367   no     yes    
+MP5_SUNSHAD_CUR_CLOSE_LOCK_SWITCH               368   no     yes    
+DRIVING_MODE_STATE                              369   no     yes    
+VEHICLE_AMBIENTLIGHTBRIGHTNESS_LEVEL_NIGHT      370   no     yes    
+MP5_SELECTED_EPS_MODE                           371   no     yes    
+EMS_SELECTED_EPS_MODE                           372   no     yes    
+MP5_UNLOCK_LAMP_PATTERN_SWITCH                  373   no     yes    
+MP5_LOCK_LAMP_PATTERN_SWITCH                    374   no     yes    
+MP5_PARKING_SAYHI_PATTERN_SWITCH                375   no     yes    
+MP5_ASD_SWITCH                                  376   no     yes    
+MP5_ASD_MODE                                    377   no     yes    
+AUTO_HOLD                                       378   yes    yes    S31VehicleState
+MP5_SPORT_MODE_SWITCH                           379   no     yes    
+MP5_AL_RELATED_MUSIC_SWITCH                     380   no     yes    
+MFTS_AC_KEY_AUTO                                381   no     yes    
+MFTS_AC_KEY_OFF                                 382   no     yes    
+MFTS_AC_KEY_DEF_MAX                             383   no     yes    
+MFTS_AC_KEY_RDEF                                384   no     yes    
+MFTS_AC_KEY_OUTLET_AUTO                         385   no     yes    
+MP5_AL_WELCOME_SWITCH                           386   no     yes    
+MP5_COURTESY_LIGHT_SWTICH                       387   no     yes    
+SENSING_TAILGATE_FUNCTION                       388   no     yes    
+MP5_RFOGLIGHT_SWITCH                            389   no     yes    
+IVI_MAINLIGHT_SWITCH                            390   yes    yes    VehicleState(direct)
+IVI_LREAR_MIRRORXY_ADJUST_SW                    391   no     yes    
+IVI_RREAR_MIRRORXY_ADJUST_SW                    392   no     yes    
+IVI_REAR_MIRROR_ADJUST_ACTISW                   393   no     yes    
+IVI_SELECTED_DRIVING_MODE                       394   no     yes    
+MP5_DAB_SWITCH                                  395   no     yes    
+IVI_IGNOnOffReq                                 396   yes    yes    S31VehicleState
+MP5_TAILGATEHEIGHT                              397   no     yes    
+FRLOWBEAMADJSW                                  398   no     yes    
+WELCOME_UNLOCK_WITCH                            399   no     yes    
+EMS_CREDIT_VHE_LIMP_ST                          400   no     yes    
+FORBID_VHE_START_EN_ST                          401   no     yes    
+HOT_MAX_AC                                      402   no     yes    
+IVI_EPB_SW                                      403   yes    yes    S31VehicleState
+ESC_EPB_MESSAGE_REQ                             404   no     yes    
+EPEDAL_SW                                       405   no     yes    
+RLS_AUTO_LIGHT                                  406   yes    yes    S31VehicleState
+AUTOINTWIND                                     407   no     yes    
+WIPER_MAINTAIN_ST                               408   no     yes    
+SOC_CALCULATE                                   409   no     yes    
+DOMELIGHT_TOGE                                  410   no     yes    
+CRUISRANGE_DISPLAY                              411   no     yes    
+RESERVED_CHRGSOC_TARGET                         412   no     yes    
+BATTERY_TYPE                                    413   no     yes    
+IMMEDIATE_CHRG_REQ                              414   no     yes    
+RESERVED_CHRG_STOPREQ                           415   no     yes    
+CHRGCURRENT_SET                                 416   no     yes    
+GUNINSERT_KEEPWARM_SETSW                        417   no     yes    
+DISCHRGST_V2L                                   418   no     yes    
+DISCHRG_SOCTARGET                               419   no     yes    
+BATTSOC_STATUS                                  420   no     yes    
+MP5_SERCHCAR                                    421   no     yes    
+MP5_SERCHCAR_VOICE                              422   no     yes    
+MP5_UNLOCKSW                                    423   no     yes    
+MP5_UNLOCK_VOICE                                424   no     yes    
+MP5_LOCKSW                                      425   no     yes    
+MP5_LOCK_VOICE                                  426   no     yes    
+MP5_SAYHI                                       427   yes    yes    VehicleState(direct)
+MP5_SAYHI_VOICE                                 428   no     yes    
+MP5_ACOUSTICS_STOP_REQ                          429   no     yes    
+PDCU_CHRG_CNCTST                                430   no     yes    
+PDCU_DISCHRG_CNCTST_V2L                         431   no     yes    
+IVI_TRACTIONMODEDISPLAYREQ                      432   no     yes    
+IVI_TRACTIONREQ                                 433   no     yes    
+PDCU_TRACTIONALARM                              434   no     yes    
+PDCU_TRACTIONREQFB                              435   no     yes    
+PDCU_TRACTIONMODEDISPLAYREQFB                   436   no     yes    
+PDCU_CHRGST                                     437   no     yes    
+IVI_CHARGGUNUNLOCKREQ                           438   no     yes    
+MP5_DISCHRGSTOPREQ                              439   no     yes    
+DRIVER_BELTSWITCH                               440   no     yes    
+MP5_SEAT_REST_MODE                              441   no     yes    
+MP5_SEAT_ADJ_POPUP                              442   no     yes    
+AC_REST_MODE                                    443   no     yes    
+AIRBAG_FAILSTS                                  444   no     yes    
+ISASTATUS                                       445   no     yes    
+LKA_STATUS_DISPLAY                              446   no     yes    
+LDW_STATUS_DISPLAY                              447   no     yes    
+AEBFAULT_STATUS                                 448   no     yes    
+IHBC_FUCTION_STATUS                             449   no     yes    
+SYSFAULTWARN                                    450   no     yes    
+WARNINGLAMPST                                   451   no     yes    
+ESCALARMSIG                                     452   no     yes    
+ESC_EBDALARMSIG                                 453   no     yes    
+ENGHOODUNLOCKWARMING                            454   no     yes    
+DRIVING_PERMIT                                  455   no     yes    
+OTA_MODE_REQ                                    456   no     yes    
+BCM_CAR_MODE                                    457   no     yes    
+OTA_ESTIMATED_UPGRADETIME                       458   no     yes    
+PEPS_AUTHRESULT_RESP                            459   no     yes    
+FEUL_CAP_ST                                     460   no     yes    
+ENGINE_START_MODE                               461   no     yes    
+DRIVING_PERMIT_STATUS                           462   no     yes    
+MP5_ISA_SEVICES_TATUS                           463   no     yes    
+MP5_ISA_SEVICE_CONFIDENCE                       464   no     yes    
+MP5_NAVICURRENTWAY_FUNCTIONAL                   465   no     yes    
+MP5_NAVCTRY_CODEINFO                            466   no     yes    
+MP5_NAVSPEED_LIMITUNITS                         467   no     yes    
+MP5_NAVCURR_ROADTYPE                            468   no     yes    
+MP5_NAVSPEED_LIMIT                              469   no     yes    
+MP5_NAVSPEED_LIMITTYPE                          470   no     yes    
+MP5_NAVIMPLICITSPEEDLIMITTYPE                   471   no     yes    
+MP5_NAVRAMPDISTANCE                             472   no     yes    
+MP5_NAV_SPEEDLIMIT_V1                           473   no     yes    
+MP5_EXPVEHLANGUAGESET                           474   no     yes    
+MP5_NAV_SPEEDLIMIT_V2                           475   no     yes    
+MP5_NAV_SPEEDLIMIT_V3                           476   no     yes    
+MP5_NAV_SPEEDLIMIT_V4                           477   no     yes    
+MP5_ISALIMCHG_SOUNDSW                           478   no     yes    
+MP5_ISAWARNING_SOUNDSW                          479   no     yes    
+DMS_DROWSNS_LV                                  480   no     yes    
+DMS_DISTRCTN_LV                                 481   no     yes    
+MP5_DROWSNS_SW                                  482   no     yes    
+MP5_DISTRCTN_SW                                 483   no     yes    
+TBOX_RESERVED_CHRGST                            484   no     yes    
+BATTERY_HEALTH                                  485   no     yes    
+PASSENGER_AIRBAG                                486   no     yes    
+STEERING_WHEEL_HEATING                          487   no     yes    
+
+=== BLOCK 2: com.qinggan.canbus.AirConditionState (enum, 42 constants) ===
+CONSTANT_NAME ordinal=<N> ui_used=<yes|no> setter=<yes|no>   setter: setAirConditionState(AirConditionState;I)V
+# CONSTANT_NAME                                     ordinal  ui_used setter
+AC_BLOWER                                         0   no     yes
+HVAC_VD_MODE                                      1   no     yes
+AC_LEFT_TEMP                                      2   no     yes
+AC_RIGHT_TEMP                                     3   no     yes
+AC_SWITCH                                         4   no     yes
+AC_MAX_SWITCH                                     5   no     yes
+AC_AUTO                                           6   no     yes
+AC_POWER_SWITCH                                   7   no     yes
+AC_FRONT_DEFROST_SWITCH                           8   no     yes
+AC_REAR_DEFROST_SWITCH                            9   no     yes
+AC_RECIRC_AIR                                    10   no     yes
+AC_DUAL                                          11   no     yes
+AC_FLOW_MODE                                     12   no     yes
+AC_TEMP_DEM                                      13   no     yes
+AC_HEAT_SWITCH                                   14   no     yes
+AC_TEMP_DEM_ADD                                  15   no     yes
+AC_TEMP_DEM_DEC                                  16   no     yes
+AC_BLOWER_DEM_ADD                                17   no     yes
+AC_BLOWER_DEM_DEC                                18   no     yes
+AC_ION_SWITCH                                    19   no     yes
+AC_PM_SWITCH                                     20   no     yes
+AC_AQS_SWITCH                                    21   no     yes
+AC_TEMP_OUTCAR                                   22   no     yes
+AC_PM2_5                                         23   no     yes
+AC_RUNNING_STATE                                 24   no     yes
+AC_COMBINATION_FUNCTION_1                        25   no     yes
+AC_COMBINATION_FUNCTION_2                        26   no     yes
+AC_COMBINATION_FUNCTION_3                        27   no     yes
+AC_COMBINATION_FUNCTION_4                        28   no     yes
+AC_COMBINATION_FUNCTION_5                        29   no     yes
+AC_COMBINATION_FUNCTION_6                        30   no     yes
+AC_COMBINATION_FUNCTION_7                        31   no     yes
+AC_COMBINATION_FUNCTION_8                        32   no     yes
+AC_RAPID_COOLING_MODE                            33   no     yes
+AC_ONE_BUTTON_WARMTH_MODE                        34   no     yes
+AC_HAZE_MODE                                     35   no     yes
+AC_BABY_CARE_MODE                                36   no     yes
+AC_AIR_CLEANER                                   37   no     yes
+AC_RAIN_SNOW_MODE                                38   no     yes
+AC_SMOKING_MODE                                  39   no     yes
+AC_STOP_CAR_MODE                                 40   no     yes
+AC_REST_MODE                                     41   no     yes
+
+=== BLOCK 3: com.qinggan.canbus.SituationalModeInfo (NOT an enum — Parcelable) ===
+No $VALUES array, no ordinals: <clinit> assigns only CREATOR.
+ICanBusService: getACSituationalInfo()SituationalModeInfo;, getBCMSituationalInfo()SituationalModeInfo;
+No setter accepts SituationalModeInfo -> read-only.
+CONSTANT_NAME ordinal=<N> ui_used=<yes|no> setter=<yes|no>
+UNKNOWN                                           N/A   no     no    (static field, type I)
+# instance state fields: 9
+    mBabyCareMode                               type I
+    mHazeMode                                   type I
+    mOneButtonWarmthMode                        type I
+    mRainSnowMode                               type I
+    mRapidCoolingMmode                          type I
+    mRestMode                                   type I
+    mRomanticMode                               type I
+    mSmokingMode                                type I
+    mStopCarMode                                type I
+
+=== BLOCK 4: com.qinggan.canbus.SmartCustomData (NOT an enum — Parcelable) ===
+No $VALUES array, no ordinals: <clinit> assigns only CREATOR.
+ICanBusService: setSmartCustomModeStatus(SmartCustomData;I)V — setter exists.
+CONSTANT_NAME ordinal=<N> ui_used=<yes|no> setter=<yes|no>
+# no static constants besides CREATOR
+# instance state fields: 35
+    bAirACStatus                                type Ljava/lang/Boolean;
+    bAirCirculationModeStatus                   type Ljava/lang/Boolean;
+    bAirCopilotOutletStatus                     type Ljava/lang/Boolean;
+    bAirFrontDefrostStatus                      type Ljava/lang/Boolean;
+    bAirMainOutletStatus                        type Ljava/lang/Boolean;
+    bAirRearDefrostStatus                       type Ljava/lang/Boolean;
+    bAirSWStatus                                type Ljava/lang/Boolean;
+    bAirSupplyStatus                            type Ljava/lang/Boolean;
+    bAirTempStatus                              type Ljava/lang/Boolean;
+    bAirWindSpeedStatus                         type Ljava/lang/Boolean;
+    bCopilotSeatHeatStatus                      type Ljava/lang/Boolean;
+    bLampStatus                                 type Ljava/lang/Boolean;
+    bMainSeatHeatStatus                         type Ljava/lang/Boolean;
+    bMainSeatMassageStatus                      type Ljava/lang/Boolean;
+    bMainSeatWindStatus                         type Ljava/lang/Boolean;
+    bMusicStatus                                type Ljava/lang/Boolean;
+    bNaviStatus                                 type Ljava/lang/Boolean;
+    bQQMusicStatus                              type Ljava/lang/Boolean;
+    bSkylightStatus                             type Ljava/lang/Boolean;
+    mAirCirculationMode                         type I
+    mAirCopilotOutletMode                       type I
+    mAirMainOutletMode                          type I
+    mAirSupplyMode                              type I
+    mAirTemperature                             type F
+    mAirWindSpeed                               type I
+    mCopilotSeatHeatMode                        type I
+    mLampMode                                   type I
+    mMainSeatHeatMode                           type I
+    mMainSeatMassageMode                        type I
+    mMainSeatMassageType                        type I
+    mMainSeatWindMode                           type I
+    mMusicMode                                  type I
+    mNaviMode                                   type I
+    mQQMusicMode                                type I
+    mSkylightMode                               type I
+
+=== ORDINAL TABLE (all constants of both enums) ===
+# enum                   ordinal  name
+AirConditionState          0  AC_BLOWER
+AirConditionState          1  HVAC_VD_MODE
+AirConditionState          2  AC_LEFT_TEMP
+AirConditionState          3  AC_RIGHT_TEMP
+AirConditionState          4  AC_SWITCH
+AirConditionState          5  AC_MAX_SWITCH
+AirConditionState          6  AC_AUTO
+AirConditionState          7  AC_POWER_SWITCH
+AirConditionState          8  AC_FRONT_DEFROST_SWITCH
+AirConditionState          9  AC_REAR_DEFROST_SWITCH
+AirConditionState         10  AC_RECIRC_AIR
+AirConditionState         11  AC_DUAL
+AirConditionState         12  AC_FLOW_MODE
+AirConditionState         13  AC_TEMP_DEM
+AirConditionState         14  AC_HEAT_SWITCH
+AirConditionState         15  AC_TEMP_DEM_ADD
+AirConditionState         16  AC_TEMP_DEM_DEC
+AirConditionState         17  AC_BLOWER_DEM_ADD
+AirConditionState         18  AC_BLOWER_DEM_DEC
+AirConditionState         19  AC_ION_SWITCH
+AirConditionState         20  AC_PM_SWITCH
+AirConditionState         21  AC_AQS_SWITCH
+AirConditionState         22  AC_TEMP_OUTCAR
+AirConditionState         23  AC_PM2_5
+AirConditionState         24  AC_RUNNING_STATE
+AirConditionState         25  AC_COMBINATION_FUNCTION_1
+AirConditionState         26  AC_COMBINATION_FUNCTION_2
+AirConditionState         27  AC_COMBINATION_FUNCTION_3
+AirConditionState         28  AC_COMBINATION_FUNCTION_4
+AirConditionState         29  AC_COMBINATION_FUNCTION_5
+AirConditionState         30  AC_COMBINATION_FUNCTION_6
+AirConditionState         31  AC_COMBINATION_FUNCTION_7
+AirConditionState         32  AC_COMBINATION_FUNCTION_8
+AirConditionState         33  AC_RAPID_COOLING_MODE
+AirConditionState         34  AC_ONE_BUTTON_WARMTH_MODE
+AirConditionState         35  AC_HAZE_MODE
+AirConditionState         36  AC_BABY_CARE_MODE
+AirConditionState         37  AC_AIR_CLEANER
+AirConditionState         38  AC_RAIN_SNOW_MODE
+AirConditionState         39  AC_SMOKING_MODE
+AirConditionState         40  AC_STOP_CAR_MODE
+AirConditionState         41  AC_REST_MODE
+VehicleState               0  ASR
+VehicleState               1  TyresSpeedWarning
+VehicleState               2  TyresSpeed
+VehicleState               3  TyrePressureMonitoring
+VehicleState               4  AdaptiveCruiseControlSystem
+VehicleState               5  DriverAlertSystem
+VehicleState               6  LastVehicleDistance
+VehicleState               7  FrontAssistSet
+VehicleState               8  PrevWarning
+VehicleState               9  DisplayDistanceWarning
+VehicleState              10  LaneKeepingAssist
+VehicleState              11  TravelProgramme
+VehicleState              12  VehicleDistance
+VehicleState              13  ParkingAutoActive
+VehicleState              14  ParkingFrontVolume
+VehicleState              15  ParkingFrontTone
+VehicleState              16  ParkingBackVolume
+VehicleState              17  ParkingBackTone
+VehicleState              18  LightOpenedTime
+VehicleState              19  AutomaticHeadlightControl
+VehicleState              20  LaneChangeFlash
+VehicleState              21  InstrumentSwitchLighting
+VehicleState              22  ComingHomeFunction
+VehicleState              23  LeavingHomeFunction
+VehicleState              24  TravelMode
+VehicleState              25  DoorAmbientLight
+VehicleState              26  FootWellLight
+VehicleState              27  DynamicBigLight
+VehicleState              28  DynamicBigLightAssistance
+VehicleState              29  SynchronousAdjustment
+VehicleState              30  LowerWhileReversing
+VehicleState              31  AutomaticWipingInRain
+VehicleState              32  RearWindowWipingInReverseGear
+VehicleState              33  ParkingOverlapMirror
+VehicleState              34  ConvenienceOpening
+VehicleState              35  DoorUnlocking
+VehicleState              36  SpeedLimit
+VehicleState              37  AutomaticLocking
+VehicleState              38  FCWSensitivity
+VehicleState              39  TSRSwitch
+VehicleState              40  AutoWelcomeLampSwitch
+VehicleState              41  AutoWindUnlockSet
+VehicleState              42  NaviTurn
+VehicleState              43  PositionLamp
+VehicleState              44  AutoWindKeyPressSet
+VehicleState              45  AutoWindLockSet
+VehicleState              46  MP5ProfileSet
+VehicleState              47  AC_HAZE_MODE
+VehicleState              48  AC_ONE_BUTTON_WARMTH_MODE
+VehicleState              49  AC_RAPID_COOLING_MODE
+VehicleState              50  AC_RAIN_SNOW_MODE
+VehicleState              51  AC_BABY_CARE_MODE
+VehicleState              52  AC_ROMANTIC_MODE
+VehicleState              53  AC_SMOKING_MODE
+VehicleState              54  AC_STOP_CAR_MODE
+VehicleState              55  DaytimeRunninglights
+VehicleState              56  RKELockFeedbackSwitch
+VehicleState              57  RKEFunction
+VehicleState              58  ShutdownAutoUlockFunction
+VehicleState              59  ShutdownAutoUlockSwitch
+VehicleState              60  AutoCloseWindowsFunction
+VehicleState              61  AutoCloseWindowsMode
+VehicleState              62  PositionLightAutoCloseFunction
+VehicleState              63  PositionLightAutoCloseSwitch
+VehicleState              64  RVMAutoFoldingSwitch
+VehicleState              65  RVMFunction
+VehicleState              66  RainingAutoCloseWindowsFunction
+VehicleState              67  RainingAutoCloseWindowsSwitch
+VehicleState              68  SunroofFunction
+VehicleState              69  SunroofControl
+VehicleState              70  LDWFunction
+VehicleState              71  LDWSwitch
+VehicleState              72  LDWStatus
+VehicleState              73  LDWWaringValue
+VehicleState              74  IHBCFunction
+VehicleState              75  IHBCSwitch
+VehicleState              76  IHBCStatus
+VehicleState              77  FCWFunction
+VehicleState              78  FCWSwitch
+VehicleState              79  AEBFunction
+VehicleState              80  AEBSwitch
+VehicleState              81  EPSFunction
+VehicleState              82  EPSModeSelection
+VehicleState              83  SendDateTimetoICUFunction
+VehicleState              84  SendDateTimetoICUSwitch
+VehicleState              85  STEERING_WHEEL_HEATING_SWITCH
+VehicleState              86  LEFT_SEAT_VALICATION_LEVEL
+VehicleState              87  RIGHT_SEAT_VALICATION_LEVEL
+VehicleState              88  CLEAN_AIR_ACTIVE_SWITCH
+VehicleState              89  CLEAN_AIR_LEVEL
+VehicleState              90  OPS_MUTE_SWITCH
+VehicleState              91  OPS_SURFACE_POP_SWITCH
+VehicleState              92  OPS_DRAG_CAR_CONNECTION_SWITCH
+VehicleState              93  RDK_CALIBRATION_TYRE_SWITCH
+VehicleState              94  HEAD_LIGHT_STATUS
+VehicleState              95  RVC_REVER_LIGHT_SWITCH
+VehicleState              96  STEERING_WHEEL_HEATING_SWITCH_OPERABILITY
+VehicleState              97  HEAD_LIGHT_STATUS_OPERABILITY
+VehicleState              98  RADAR_PRODE_COUNT
+VehicleState              99  OPS_MUTE_SWITCH_OPERABILITY
+VehicleState             100  DAY_LIGHT_SWITCH
+VehicleState             101  SUNROOF_RKESETTING_SWITCH
+VehicleState             102  SUNROOFROLLSHADE_CONTROLSELECT
+VehicleState             103  WINDOW_VENTILATE_RKESETTING
+VehicleState             104  USER_DET_SEND_SWITCH
+VehicleState             105  OBC_HOUR_START_SETTING
+VehicleState             106  OBC_MINUTE_START_SETTING
+VehicleState             107  OBC_HOUR_END_SETTING
+VehicleState             108  OBC_MINUTE_END_SETTING
+VehicleState             109  OBC_CANCEL_SIGNAL_SWITCH
+VehicleState             110  OBC_SET_SIGNAL_SWITCH
+VehicleState             111  USER_REMOTE_BOOT_FEED_SWITCH
+VehicleState             112  LOW_POWER_SET_SWITCH
+VehicleState             113  BMS_BATT_SOC_STATUS
+VehicleState             114  SAFETY_TONE_SWITCH
+VehicleState             115  PARKING_ASSISTANCE_SWITCH
+VehicleState             116  ENERGY_RECOVERY_GEAR
+VehicleState             117  DOOR_OPENING_TONE_SWITCH
+VehicleState             118  ENERGY_CONSUM_HISTORY
+VehicleState             119  ENERGY_CON_SUM_AV
+VehicleState             120  ENERGY_FLOW
+VehicleState             121  BSD_SYSTEM_SWITCH
+VehicleState             122  BSD_OP_Status
+VehicleState             123  TIME_CHARGING_SWITCH
+VehicleState             124  LDW_WARNING_TYPE
+VehicleState             125  LOW_POWER_TONE_SWITCH
+VehicleState             126  MCU_ALARM_LEVEL_STATUS
+VehicleState             127  SYS_LANGUAGE
+VehicleState             128  SIGNAL_PEDL_SWITCH
+VehicleState             129  WARM_SWITCH
+VehicleState             130  VEHICLE_DOOR_CONTROL
+VehicleState             131  VEHICLE_IGNITION_SWITCH
+VehicleState             132  SIGNAL_PEDL_STATUS
+VehicleState             133  WARM_STATUS
+VehicleState             134  LKS_LANE_AID_TYPE_REQ
+VehicleState             135  LDW_LKS_SENSITIVITY
+VehicleState             136  PGS_SWITCH
+VehicleState             137  PEDE_PROT_SWITCH
+VehicleState             138  HAM_REQ_SWITCH
+VehicleState             139  TSR_REQ_SWITCH
+VehicleState             140  LKSStatus
+VehicleState             141  TSRStatus
+VehicleState             142  DRIVER_WINDOW_CONTROL
+VehicleState             143  PAS_WIDOW_CONTROL
+VehicleState             144  LEFT_BACK_WINDOW_CONTROL
+VehicleState             145  RIGHT_BACK_WINDOW_CONTROL
+VehicleState             146  ALL_WINDOW_CONTROL
+VehicleState             147  ALL_LEFT_WINDOW_CONTROL
+VehicleState             148  ALL_RIGHT_WINDOW_CONTROL
+VehicleState             149  ALL_FRONT_WINDOW_CONTROL
+VehicleState             150  ALL_REAR_WINDOW_CONTROL
+VehicleState             151  SUNROOF_TITL_CONTROL
+VehicleState             152  VEHICLE_TUNK_CONTROL
+VehicleState             153  HIGH_BEAM
+VehicleState             154  LOW_BEAM
+VehicleState             155  PARK_LIGHT
+VehicleState             156  FRONT_FOG_LIGHT
+VehicleState             157  REAR_FOG_LIGHT
+VehicleState             158  RIGHT_DIRECTION_LIGHT
+VehicleState             159  LEFT_DIRECTION_LIGHT
+VehicleState             160  FRONT_WASHER_WIPER
+VehicleState             161  FRONT_WASHER_WIPER_STATUS
+VehicleState             162  REAR_WINDOWN_HEAT_STATUS
+VehicleState             163  REAR_WASHER_WIPER
+VehicleState             164  ATMOSPHERE_LAMP_GRADS
+VehicleState             165  AVN_KEY_REARDEF
+VehicleState             166  FRONT_WIPER
+VehicleState             167  MP5_WORK_SWITCH
+VehicleState             168  TAILGATE_DELAY_COLSE_TIMING
+VehicleState             169  IC_STYLE_WITCH
+VehicleState             170  KICK_FUNCTION_ENABLE_SWITCH
+VehicleState             171  IC_STYLE_SETTING_LEFT
+VehicleState             172  IC_STYLE_SETTING_RIGHT
+VehicleState             173  ELECTRIC_TAILGATE_SWITCH
+VehicleState             174  WALK_LOCK_SWITCH
+VehicleState             175  HDC_SWITCH
+VehicleState             176  SEAT_WELCOM_SWITCH
+VehicleState             177  MAIN_SCREEN_BRIGHTNESS
+VehicleState             178  THEME_CHANGE
+VehicleState             179  VEHICLE_AMBIENTLIGHTBRIGHTNESS_SWITCH
+VehicleState             180  VEHICLE_AMBIENTLIGHTBRIGHTNESS_COLOR
+VehicleState             181  VEHICLE_AMBIENTLIGHTBRIGHTNESS_LEVEL
+VehicleState             182  FOLLOW_ME_HOME_SETTING
+VehicleState             183  PM2_5_SWITCH
+VehicleState             184  TAILGATEDOORLOCK_ENABLE_SWITCH
+VehicleState             185  BCMDOORLOCK
+VehicleState             186  ADVANCEDPARKMODE
+VehicleState             187  ADVANCEDPARKASSIST
+VehicleState             188  ADV_REQUSETDISPLY
+VehicleState             189  GW_ESC_VEHSPDVALIDFLAG
+VehicleState             190  ESC_ABSALARMSIG
+VehicleState             191  GW_ESC_VEHSPD
+VehicleState             192  DEVICE_POWER
+VehicleState             193  GEARSHIFTREMIND_FC_ENABLE_SWITCH
+VehicleState             194  VOICE_CONTROL_SUNROOF_SWITCH
+VehicleState             195  DRIVING_LOKING_FC_SWITCH
+VehicleState             196  TRUNK_AUTO_LOKING_FC_SWITCH
+VehicleState             197  LOCK_FAIL_SOUND_SWITCH
+VehicleState             198  LOCK_SUCCESS_SOUND_SWITCH
+VehicleState             199  LDW_ENABLE_STAUS
+VehicleState             200  HMA_STATUS
+VehicleState             201  FRONT_SEAT_HEATING_COMMAND_RIGHT
+VehicleState             202  FRONT_SEAT_HEATING_COMMAND_LEFT
+VehicleState             203  FRONT_SEAT_VENTILATION_COMMAND_RIGHT
+VehicleState             204  FRONT_SEAT_VENTILATION_COMMAND_LEFT
+VehicleState             205  TSR_WARNING_TYPE
+VehicleState             206  INSTRUMENTS_BRIGHTNESS_MODE_DAY
+VehicleState             207  INSTRUMENTS_BRIGHTNESS_MODE_NIGHT
+VehicleState             208  TIRE_PRESSURE_RESET
+VehicleState             209  NAVI_SPEED_LIMIT_MILE
+VehicleState             210  NAVI_SPEED_LIMIT_KM
+VehicleState             211  BMS_VEH_MODE
+VehicleState             212  BMS_OBC_REM_TIME
+VehicleState             213  SIDEVIEW_CONTROL
+VehicleState             214  CHARGE_RATE
+VehicleState             215  ENERGY_FLOW_LEVEL
+VehicleState             216  BATT_OBC_TIME
+VehicleState             217  TSR_SWITCH
+VehicleState             218  HMA_ON_OFF_REQ
+VehicleState             219  TSR_OPERATING_STATUS
+VehicleState             220  TSR_SPEED_LIMIT
+VehicleState             221  TSR_SIGN_TYPE
+VehicleState             222  TSR_SPEED_LIMIT_UNIT
+VehicleState             223  TSR_WARNING
+VehicleState             224  TSR_SWITCH_RESPONSE
+VehicleState             225  FCW_STATUS
+VehicleState             226  AEB_STATUS
+VehicleState             227  PEDE_PROT_STATUS
+VehicleState             228  FCW_SWITCH
+VehicleState             229  AEB_SWITCH
+VehicleState             230  ESC_OFF_STATUS
+VehicleState             231  READY_LAMP
+VehicleState             232  ONE_KM_FLAG
+VehicleState             233  BCM_RCM_ERROR
+VehicleState             234  COMBINATION_LIGHT_SWITCH
+VehicleState             235  ALL_SEAT_HEATING_SWITCH
+VehicleState             236  ALL_SEAT_VENTILATION_SWITCH
+VehicleState             237  FRONT_SEAT_HEATING_BATTERY_STATUS
+VehicleState             238  AVM_CALIBRATE_START
+VehicleState             239  PHYSICAL_KEY_LIGHT_CONTROL_STATUS
+VehicleState             240  PHYSICAL_KEY_FRONT_WIPER_CONTROL_STATUS
+VehicleState             241  PHYSICAL_KEY_FRONT_WASHER_CONTROL_STATUS
+VehicleState             242  PHYSICAL_KEY_REAR_WASHER_CONTROL_STATUS
+VehicleState             243  PHYSICAL_KEY_HIGH_LIGHT_CONTROL_STATUS
+VehicleState             244  LITTLE_LIGHT_STATUS
+VehicleState             245  TAILGATE_OPEN_CTRL_REQ
+VehicleState             246  TAILGATE_COLSE_CTRL_REQ
+VehicleState             247  SEAT_MEMORY_SET_REQ
+VehicleState             248  SEAT_MEMORY_USE_REQ
+VehicleState             249  SUNSHADING_CURTAIN_REQ
+VehicleState             250  FOG_LIGHT
+VehicleState             251  WARNING_LIGHT
+VehicleState             252  ADAPTIVE_CRUISE_CONTROL_SWITCH
+VehicleState             253  ADAPTIVE_CRUISE_CONTROL_SIGNAL_STATUS
+VehicleState             254  CANBUS_LOG_ENABLE
+VehicleState             255  DVR_PASSWORD_RESET
+VehicleState             256  IACC_OR_ACC_FUNCTION_SWITCH
+VehicleState             257  IACC_OR_ACC_STATUS
+VehicleState             258  COMBINATION_VEHICLE_REQ1
+VehicleState             259  COMBINATION_VEHICLE_REQ2
+VehicleState             260  COMBINATION_VEHICLE_REQ3
+VehicleState             261  MPU_SET_WEATHER
+VehicleState             262  FLK_SYSTEM_SWITCH
+VehicleState             263  VEHICLE_RESET
+VehicleState             264  SEAT_POSITION_CHANGE
+VehicleState             265  SET_SEAT_USERACCOUNT
+VehicleState             266  ECO_SWITCH
+VehicleState             267  SPORT_MODE_SWITCH
+VehicleState             268  SEAT_MASSAGE_MODE_REQ
+VehicleState             269  SEAT_MASSAGE_INTENSITY_REQ
+VehicleState             270  DRIVING_MODE_MEMORY_SWITCH
+VehicleState             271  SEAT_VENTILATION_AUTO_OPEN_SWITCH
+VehicleState             272  SEAT_MASSAGE_KEY_FEEDBACK
+VehicleState             273  TREND_WELCOME_UNLOCK_WITCH
+VehicleState             274  TREND_WELCOME_LAMP_SWITCH
+VehicleState             275  APA_SWITCH
+VehicleState             276  SEAT_VENTILATE_AUTO_SWITCH
+VehicleState             277  ISA_MODE
+VehicleState             278  LDW_WARNING_MODE
+VehicleState             279  AIR_OUTLET_MAX_REQ
+VehicleState             280  AIR_DRIVER_SEAT_OUTLET_REQ
+VehicleState             281  AIR_PASSENGER_SEAT_OUTLET_REQ
+VehicleState             282  AIR_DRIVER_SEAT_REM_REQ
+VehicleState             283  AIR_PASSENGER_SEAT_REM_REQ
+VehicleState             284  AIR_LEFT_LR_POS_REQ
+VehicleState             285  AIR_LEFT_UD_POS_REQ
+VehicleState             286  AIR_LEFT_MID_LR_POS_REQ
+VehicleState             287  AIR_LEFT_MID_UD_POS_REQ
+VehicleState             288  AIR_RIGHT_MID_LR_POS_REQ
+VehicleState             289  AIR_RIGHT_MID_UD_POS_REQ
+VehicleState             290  AIR_RIGHT_LR_POS_REQ
+VehicleState             291  AIR_RIGHT_UD_POS_REQ
+VehicleState             292  MFTS_AC_MAX_AC
+VehicleState             293  MFTS_AC_OUTLET_AUTO
+VehicleState             294  ADP_POPUP_WINDOW_REQUEST
+VehicleState             295  MASSAGE_SAFE_MODE_SWITCH
+VehicleState             296  AVAS_PAUSE_SWITCH
+VehicleState             297  UPA_SWITCH
+VehicleState             298  OTA_MODE_STATUS
+VehicleState             299  BSD_SOUND_SWITCH
+VehicleState             300  ADAS_SEG_EFFSPLMT
+VehicleState             301  ANTI_FORGREMIND_SWITCH
+VehicleState             302  ADP_INSTANT_WARMING_MODEST
+VehicleState             303  ICA_STATUS
+VehicleState             304  LKA_SWITCH_STATE
+VehicleState             305  IHBC_SWITCH
+VehicleState             306  KICK_FUNCTION_STATE
+VehicleState             307  ELECTRIC_TAILGATE_FUNCTION_STATE
+VehicleState             308  TAILGATE_POSITION
+VehicleState             309  LKA_MODE
+VehicleState             310  LKA_MAIN_SW
+VehicleState             311  ISA_MAIN_SW
+VehicleState             312  FCW_SENSITIVITY
+VehicleState             313  CWP_SWITCH
+VehicleState             314  MP5_VBC_MODE
+VehicleState             315  MP5_BBINCAR_MODE
+VehicleState             316  MP5_MUTE
+VehicleState             317  MP5_SURROUND_MODE
+VehicleState             318  CWP_OPERATING_STATUS
+VehicleState             319  CWP_FAILURE_STATUS
+VehicleState             320  CWP_RD_OPERATING_STATUS
+VehicleState             321  CWP_RD_DEVICE_TYPE
+VehicleState             322  CWP_RD_FORGOTTEN_REMINDER
+VehicleState             323  BSD_CALIBRATE
+VehicleState             324  BSD_CALIBRATE_RESULT_LEFT
+VehicleState             325  BSD_CALIBRATE_RESULT_RIGHT
+VehicleState             326  MP5_REQ_AVM
+VehicleState             327  AVM_LOG_STATUS
+VehicleState             328  AVM_FAULT
+VehicleState             329  MP5_DMS_SYSTEM_ENABLE
+VehicleState             330  MP5_DMS_EYEFATIGUE_MONITOR
+VehicleState             331  MP5_DMS_SENSITY
+VehicleState             332  MP5_DMS_MONITOR_LONGTIME_DRIVE
+VehicleState             333  MP5_DMS_MONITOR_SIDE_VIEW
+VehicleState             334  MP5_DMS_MONITOR_USING_PHONE
+VehicleState             335  MP5_DMS_MONITOR_SOMKING
+VehicleState             336  MP5_DMS_MONITOR_DRINK_WATER
+VehicleState             337  MP5_DMS_USERACCOUNT
+VehicleState             338  MP5_BSD_LCW_SWITCH
+VehicleState             339  MP5_JA_SWITCH
+VehicleState             340  MP5_FCTA_SWITCH
+VehicleState             341  MP5_TLC_MODE
+VehicleState             342  MP5_LSS_MODE
+VehicleState             343  MP5_DOW_SWITCH
+VehicleState             344  MP5_RCTA_SWITCH
+VehicleState             345  MP5_MULTIMODE_SWITCH
+VehicleState             346  MP5_ESA_SWITCH
+VehicleState             347  ENM_LKAS_OPERATING_STATUS
+VehicleState             348  ENM_PARKING_ASSIST_STATUS
+VehicleState             349  ENM_PARKING_ASSIST_PROGRESS
+VehicleState             350  ENM_PARKING_ASSIST_PROGRESS_STATUS
+VehicleState             351  ENM_PARKING_ASSIST_INFORMATION_DISPLAY_REQUEST
+VehicleState             352  HOPE_OPEN_RAIN_SNOW_MODE
+VehicleState             353  AVM_DYNAMIC_GUIDES_SET_REQUEST
+VehicleState             354  AVM_VEHICLE_COLOR_SET_REQUEST
+VehicleState             355  AVM_OPERATING_MODE_CONTROL_SET_REQUEST
+VehicleState             356  AVM_TRUN_TRIGGER_SET_REQUEST
+VehicleState             357  FIRST_START_TO_SPRING_AVM_SET_REQUEST
+VehicleState             358  AVM_SYSTEM_ERROR_STATUS
+VehicleState             359  AVM_VIEW_MODE_SET_STATUS
+VehicleState             360  ENM_PARKING_ASSIST_INFORMATION_DISPLAY_STATUS
+VehicleState             361  ENM_PARK_ASSISTANT_SOUND_CADENCE_COMMAND
+VehicleState             362  MP5_INTELLIGENT_SWITCH
+VehicleState             363  MP5_INTELLIGENT_MODE
+VehicleState             364  MP5_INTELLIGENT_TORQUE_COEF
+VehicleState             365  ECU_INTELLIGENT_TORQUE_COEF
+VehicleState             366  DRIVING_MODE
+VehicleState             367  MP5_LOCK_CMD_WINDOW_SWITCH
+VehicleState             368  MP5_SUNSHAD_CUR_CLOSE_LOCK_SWITCH
+VehicleState             369  DRIVING_MODE_STATE
+VehicleState             370  VEHICLE_AMBIENTLIGHTBRIGHTNESS_LEVEL_NIGHT
+VehicleState             371  MP5_SELECTED_EPS_MODE
+VehicleState             372  EMS_SELECTED_EPS_MODE
+VehicleState             373  MP5_UNLOCK_LAMP_PATTERN_SWITCH
+VehicleState             374  MP5_LOCK_LAMP_PATTERN_SWITCH
+VehicleState             375  MP5_PARKING_SAYHI_PATTERN_SWITCH
+VehicleState             376  MP5_ASD_SWITCH
+VehicleState             377  MP5_ASD_MODE
+VehicleState             378  AUTO_HOLD
+VehicleState             379  MP5_SPORT_MODE_SWITCH
+VehicleState             380  MP5_AL_RELATED_MUSIC_SWITCH
+VehicleState             381  MFTS_AC_KEY_AUTO
+VehicleState             382  MFTS_AC_KEY_OFF
+VehicleState             383  MFTS_AC_KEY_DEF_MAX
+VehicleState             384  MFTS_AC_KEY_RDEF
+VehicleState             385  MFTS_AC_KEY_OUTLET_AUTO
+VehicleState             386  MP5_AL_WELCOME_SWITCH
+VehicleState             387  MP5_COURTESY_LIGHT_SWTICH
+VehicleState             388  SENSING_TAILGATE_FUNCTION
+VehicleState             389  MP5_RFOGLIGHT_SWITCH
+VehicleState             390  IVI_MAINLIGHT_SWITCH
+VehicleState             391  IVI_LREAR_MIRRORXY_ADJUST_SW
+VehicleState             392  IVI_RREAR_MIRRORXY_ADJUST_SW
+VehicleState             393  IVI_REAR_MIRROR_ADJUST_ACTISW
+VehicleState             394  IVI_SELECTED_DRIVING_MODE
+VehicleState             395  MP5_DAB_SWITCH
+VehicleState             396  IVI_IGNOnOffReq
+VehicleState             397  MP5_TAILGATEHEIGHT
+VehicleState             398  FRLOWBEAMADJSW
+VehicleState             399  WELCOME_UNLOCK_WITCH
+VehicleState             400  EMS_CREDIT_VHE_LIMP_ST
+VehicleState             401  FORBID_VHE_START_EN_ST
+VehicleState             402  HOT_MAX_AC
+VehicleState             403  IVI_EPB_SW
+VehicleState             404  ESC_EPB_MESSAGE_REQ
+VehicleState             405  EPEDAL_SW
+VehicleState             406  RLS_AUTO_LIGHT
+VehicleState             407  AUTOINTWIND
+VehicleState             408  WIPER_MAINTAIN_ST
+VehicleState             409  SOC_CALCULATE
+VehicleState             410  DOMELIGHT_TOGE
+VehicleState             411  CRUISRANGE_DISPLAY
+VehicleState             412  RESERVED_CHRGSOC_TARGET
+VehicleState             413  BATTERY_TYPE
+VehicleState             414  IMMEDIATE_CHRG_REQ
+VehicleState             415  RESERVED_CHRG_STOPREQ
+VehicleState             416  CHRGCURRENT_SET
+VehicleState             417  GUNINSERT_KEEPWARM_SETSW
+VehicleState             418  DISCHRGST_V2L
+VehicleState             419  DISCHRG_SOCTARGET
+VehicleState             420  BATTSOC_STATUS
+VehicleState             421  MP5_SERCHCAR
+VehicleState             422  MP5_SERCHCAR_VOICE
+VehicleState             423  MP5_UNLOCKSW
+VehicleState             424  MP5_UNLOCK_VOICE
+VehicleState             425  MP5_LOCKSW
+VehicleState             426  MP5_LOCK_VOICE
+VehicleState             427  MP5_SAYHI
+VehicleState             428  MP5_SAYHI_VOICE
+VehicleState             429  MP5_ACOUSTICS_STOP_REQ
+VehicleState             430  PDCU_CHRG_CNCTST
+VehicleState             431  PDCU_DISCHRG_CNCTST_V2L
+VehicleState             432  IVI_TRACTIONMODEDISPLAYREQ
+VehicleState             433  IVI_TRACTIONREQ
+VehicleState             434  PDCU_TRACTIONALARM
+VehicleState             435  PDCU_TRACTIONREQFB
+VehicleState             436  PDCU_TRACTIONMODEDISPLAYREQFB
+VehicleState             437  PDCU_CHRGST
+VehicleState             438  IVI_CHARGGUNUNLOCKREQ
+VehicleState             439  MP5_DISCHRGSTOPREQ
+VehicleState             440  DRIVER_BELTSWITCH
+VehicleState             441  MP5_SEAT_REST_MODE
+VehicleState             442  MP5_SEAT_ADJ_POPUP
+VehicleState             443  AC_REST_MODE
+VehicleState             444  AIRBAG_FAILSTS
+VehicleState             445  ISASTATUS
+VehicleState             446  LKA_STATUS_DISPLAY
+VehicleState             447  LDW_STATUS_DISPLAY
+VehicleState             448  AEBFAULT_STATUS
+VehicleState             449  IHBC_FUCTION_STATUS
+VehicleState             450  SYSFAULTWARN
+VehicleState             451  WARNINGLAMPST
+VehicleState             452  ESCALARMSIG
+VehicleState             453  ESC_EBDALARMSIG
+VehicleState             454  ENGHOODUNLOCKWARMING
+VehicleState             455  DRIVING_PERMIT
+VehicleState             456  OTA_MODE_REQ
+VehicleState             457  BCM_CAR_MODE
+VehicleState             458  OTA_ESTIMATED_UPGRADETIME
+VehicleState             459  PEPS_AUTHRESULT_RESP
+VehicleState             460  FEUL_CAP_ST
+VehicleState             461  ENGINE_START_MODE
+VehicleState             462  DRIVING_PERMIT_STATUS
+VehicleState             463  MP5_ISA_SEVICES_TATUS
+VehicleState             464  MP5_ISA_SEVICE_CONFIDENCE
+VehicleState             465  MP5_NAVICURRENTWAY_FUNCTIONAL
+VehicleState             466  MP5_NAVCTRY_CODEINFO
+VehicleState             467  MP5_NAVSPEED_LIMITUNITS
+VehicleState             468  MP5_NAVCURR_ROADTYPE
+VehicleState             469  MP5_NAVSPEED_LIMIT
+VehicleState             470  MP5_NAVSPEED_LIMITTYPE
+VehicleState             471  MP5_NAVIMPLICITSPEEDLIMITTYPE
+VehicleState             472  MP5_NAVRAMPDISTANCE
+VehicleState             473  MP5_NAV_SPEEDLIMIT_V1
+VehicleState             474  MP5_EXPVEHLANGUAGESET
+VehicleState             475  MP5_NAV_SPEEDLIMIT_V2
+VehicleState             476  MP5_NAV_SPEEDLIMIT_V3
+VehicleState             477  MP5_NAV_SPEEDLIMIT_V4
+VehicleState             478  MP5_ISALIMCHG_SOUNDSW
+VehicleState             479  MP5_ISAWARNING_SOUNDSW
+VehicleState             480  DMS_DROWSNS_LV
+VehicleState             481  DMS_DISTRCTN_LV
+VehicleState             482  MP5_DROWSNS_SW
+VehicleState             483  MP5_DISTRCTN_SW
+VehicleState             484  TBOX_RESERVED_CHRGST
+VehicleState             485  BATTERY_HEALTH
+VehicleState             486  PASSENGER_AIRBAG
+VehicleState             487  STEERING_WHEEL_HEATING
+
+=== ICanBusService: 98 methods (Virtual methods of Lcom/qinggan/canbus/ICanBusService;) ===
+# name + type
+addCallback(Lcom/qinggan/canbus/ICanBusServiceCallback;)Z
+closeAirAutoMode()Z
+closeAirConditionSwitch()Z
+closeAirFrontWindowDefogger()Z
+getACSituationalInfo()Lcom/qinggan/canbus/SituationalModeInfo;
+getAVMInfo()Lcom/qinggan/canbus/AVMInfo;
+getAccStatus()I
+getAirCondition()Lcom/qinggan/canbus/AirCondition;
+getAirConditionState(Lcom/qinggan/canbus/AirConditionState;)I
+getAirOutletInfo()Lcom/qinggan/canbus/AirOutletInfo;
+getAlarmData()I
+getAmbientTemperature()I
+getAudioInfo()Lcom/qinggan/canbus/AudioInfo;
+getBCMSituationalInfo()Lcom/qinggan/canbus/SituationalModeInfo;
+getBSDWarningInfo()Lcom/qinggan/canbus/BSDWarningStatus;
+getBatteryRemainingCapacity()F
+getBatteryState()Lcom/qinggan/canbus/BatteryState;
+getBrakeFluidStatus()I
+getBrakePadStatus()Lcom/qinggan/canbus/BrakePadStatus;
+getCanBoxVersion()Ljava/lang/String;
+getCanRawData(I)[I
+getComprehensiveFuelConsumption()I
+getComprehensiveFuelConsumptionEX()F
+getDMSInfo()Lcom/qinggan/canbus/DMSInfo;
+getDMSStatus()Lcom/qinggan/canbus/DMSStatus;
+getDoorStatus()Lcom/qinggan/canbus/DoorStatus;
+getEngineFluidStatus()I
+getEngineSpeed()I
+getEngineStatus()I
+getEngineTemperature()I
+getFrontRadarData()Lcom/qinggan/canbus/RadarData;
+getFuelLevel()Lcom/qinggan/canbus/FuelLevel;
+getGearStatus()Lcom/qinggan/canbus/GearState;
+getHandBrakeStatus()I
+getHevSysMode()I
+getIllumination()I
+getInstantFuelConsumption()I
+getIpkSyncSvr()Lcom/qinggan/ipksync/IIpkSyncService;
+getLeftRadarData()Lcom/qinggan/canbus/RadarData;
+getLightStatus()Lcom/qinggan/canbus/LightStatus;
+getOdometer()Lcom/qinggan/canbus/Odometer;
+getPowerlLevel()Lcom/qinggan/canbus/PowerLevel;
+getRainfallLevel()I
+getReTracking()I
+getRealityWarningInfo()Lcom/qinggan/canbus/RealityWarningInfo;
+getRearRadarData()Lcom/qinggan/canbus/RadarData;
+getRightRadarData()Lcom/qinggan/canbus/RadarData;
+getSWCAngle()Lcom/qinggan/canbus/SWCAngle;
+getSeatBeltStatus()Lcom/qinggan/canbus/SeatBelt;
+getSecondaryOdometer()J
+getSmartCustomModeStatus()Z
+getTJAStatus()I
+getTPMSInfo()Lcom/qinggan/canbus/TPMSInfo;
+getVehicleCenterControlEnabled(Lcom/qinggan/canbus/VehicleCenterControlEnabled;)I
+getVehicleIO()Lcom/qinggan/canbus/VehicleIO;
+getVehicleKeyState()I
+getVehicleSceneMode()I
+getVehicleSpeed()I
+getVehicleState(Lcom/qinggan/canbus/VehicleState;)I
+getVehicleWarningInfo()Lcom/qinggan/canbus/VehicleWarningInfo;
+getWheelCount()Lcom/qinggan/canbus/WheelCount;
+getWheelSpeed()Lcom/qinggan/canbus/WheelSpeed;
+getWindowStatus()Lcom/qinggan/canbus/WindowStatus;
+getWiperFluidStatus()I
+isSupportFunction(Lcom/qinggan/canbus/FunctionType;)Z
+openAirAutoMode()Z
+openAirConditionSwitch()Z
+openAirFrontWindowDefogger()Z
+queryVehicleState()V
+removeCallback(Lcom/qinggan/canbus/ICanBusServiceCallback;)Z
+requestTravellingInfo(Lcom/qinggan/canbus/TravellingInfoType;)I
+requestVehicleCenterControlEnabledInfo()I
+setAirConditionBundleState(Landroid/os/Bundle;)I
+setAirConditionState(Lcom/qinggan/canbus/AirConditionState;I)V
+setAirLeftTemperatureDown()Z
+setAirLeftTemperatureUp()Z
+setAirOutletInfo(Lcom/qinggan/canbus/AirOutletInfo;)V
+setAirWindSpeedDown()Z
+setAirWindSpeedUp()Z
+setAudioInfo(Lcom/qinggan/canbus/AudioInfo;)V
+setDMSInfo(Lcom/qinggan/canbus/DMSInfo;)V
+setDMSStatus(Lcom/qinggan/canbus/DMSStatus;)V
+setFactoryModeResult(ILjava/lang/String;)V
+setGearBoxType(Lcom/qinggan/canbus/GearBoxType;)V
+setSmartCustomModeStatus(Lcom/qinggan/canbus/SmartCustomData;I)V
+setVehicleAndAirConditionBundleState(Landroid/os/Bundle;Landroid/os/Bundle;)I
+setVehicleBundleState(Landroid/os/Bundle;)I
+setVehicleCenterControlEnabled(Lcom/qinggan/canbus/VehicleCenterControlEnabled;I)Z
+setVehicleSceneMode(I)I
+setVehicleState(Lcom/qinggan/canbus/VehicleState;I)V
+switchAirCirculationMode()Z
+updateMediaPlayInfo(Lcom/qinggan/canbus/MediaPlayInfo;)V
+updateMediaPlayMode(Lcom/qinggan/canbus/MediaPlayMode;)V
+updateMediaPlayProgressInfo(Lcom/qinggan/canbus/MediaPlayProgressInfo;)V
+updateMediaSrcInfo(Lcom/qinggan/canbus/MediaSrcInfo;)V
+updateMediaVolume(I)V
+updateNaviInfo(Lcom/qinggan/canbus/NaviInfo;)V
+updatePhoneInfo(Lcom/qinggan/canbus/PhoneInfo;)V
+
+=== PER-MODEL SUBCLASSES (alias holders, no own ordinals) ===
+S31VehicleState: 181 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+C65VehicleState: 124 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+D53VehicleState: 105 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+G35VehicleState: 180 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+G59VehicleState: 175 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+M57VehicleState: 163 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+S01VehicleState: 164 aliased VehicleState fields; absent from base: 3 -> AUTO_SUNROOFE_SWITCH, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+X37AVehicleState: 174 aliased VehicleState fields; absent from base: 4 -> AUTO_SUNROOFE_SWITCH, DAB, GEARSHIFTREMIND_FC_ENABLE_SWITECH, VOICE_SUNROOF_TITL_CONTROL
+
+=== SUMMARY ===
+TOTAL_CONSTANTS 531   (VehicleState 488 + AirConditionState 42 + SituationalModeInfo 1 + SmartCustomData 0)
+ORPHANS_COUNT 501   (constants with ui_used=no)
+ORPHAN_ORDINALS VehicleState=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,39,40,41,42,44,45,46,47,52,53,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,72,74,75,76,77,79,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,155,156,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,297,298,299,300,301,303,304,306,307,308,309,310,311,312,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,379,380,381,382,383,384,385,386,387,388,389,391,392,393,394,395,397,398,399,400,401,402,404,405,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487 | AirConditionState=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41
+UI_USED_COUNT 29
+NO_UI_AND_NO_SETTER 0
+
+=== UI-USED CONSTANTS (full list) ===
+VehicleState.FCWSensitivity ordinal=38 via=S31VehicleState
+VehicleState.PositionLamp ordinal=43 via=S31VehicleState
+VehicleState.AC_ONE_BUTTON_WARMTH_MODE ordinal=48 via=D53VehicleState
+VehicleState.AC_RAPID_COOLING_MODE ordinal=49 via=D53VehicleState
+VehicleState.AC_RAIN_SNOW_MODE ordinal=50 via=D53VehicleState
+VehicleState.AC_BABY_CARE_MODE ordinal=51 via=D53VehicleState
+VehicleState.AC_STOP_CAR_MODE ordinal=54 via=S31VehicleState
+VehicleState.LDWSwitch ordinal=71 via=S31VehicleState
+VehicleState.LDWWaringValue ordinal=73 via=S31VehicleState
+VehicleState.FCWSwitch ordinal=78 via=S31VehicleState
+VehicleState.AEBSwitch ordinal=80 via=S31VehicleState
+VehicleState.LOW_BEAM ordinal=154 via=S31VehicleState
+VehicleState.REAR_FOG_LIGHT ordinal=157 via=S31VehicleState,VehicleState(direct)
+VehicleState.VEHICLE_AMBIENTLIGHTBRIGHTNESS_SWITCH ordinal=179 via=S31VehicleState
+VehicleState.VEHICLE_AMBIENTLIGHTBRIGHTNESS_COLOR ordinal=180 via=S31VehicleState
+VehicleState.VEHICLE_AMBIENTLIGHTBRIGHTNESS_LEVEL ordinal=181 via=S31VehicleState
+VehicleState.INSTRUMENTS_BRIGHTNESS_MODE_DAY ordinal=206 via=D53VehicleState,S31VehicleState
+VehicleState.INSTRUMENTS_BRIGHTNESS_MODE_NIGHT ordinal=207 via=D53VehicleState,S31VehicleState
+VehicleState.ESC_OFF_STATUS ordinal=230 via=S31VehicleState
+VehicleState.AVAS_PAUSE_SWITCH ordinal=296 via=S31VehicleState,VehicleState(direct)
+VehicleState.ADP_INSTANT_WARMING_MODEST ordinal=302 via=X37AVehicleState
+VehicleState.IHBC_SWITCH ordinal=305 via=S31VehicleState
+VehicleState.CWP_SWITCH ordinal=313 via=S31VehicleState
+VehicleState.AUTO_HOLD ordinal=378 via=S31VehicleState
+VehicleState.IVI_MAINLIGHT_SWITCH ordinal=390 via=VehicleState(direct)
+VehicleState.IVI_IGNOnOffReq ordinal=396 via=S31VehicleState
+VehicleState.IVI_EPB_SW ordinal=403 via=S31VehicleState
+VehicleState.RLS_AUTO_LIGHT ordinal=406 via=S31VehicleState
+VehicleState.MP5_SAYHI ordinal=427 via=VehicleState(direct)
