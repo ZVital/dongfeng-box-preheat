@@ -25,6 +25,8 @@ final class CanClient {
     private static final String ACTION = "com.qinggan.canbus.CanBusService";
     private static final String TOKEN = "com.qinggan.canbus.ICanBusService";
 
+    static final int TX_ADD_CALLBACK = 27;
+    static final int TX_REMOVE_CALLBACK = 28;
     static final int TX_GET_AIR_CONDITION = 29;
     static final int TX_OPEN_AC = 88;
     static final int TX_CLOSE_AC = 89;
@@ -81,32 +83,6 @@ final class CanClient {
 
     /** Raw reply blob of getAirCondition, or null. Snapshot reads the same blob
      * rather than a second round-trip. */
-    byte[] readAirBlob() {
-        if (binder == null) return null;
-        Parcel data = Parcel.obtain();
-        Parcel reply = Parcel.obtain();
-        try {
-            data.writeInterfaceToken(TOKEN);
-            if (!binder.transact(TX_GET_AIR_CONDITION, data, reply, 0)) return null;
-            reply.readException();
-            reply.setDataPosition(0);
-            return reply.marshall();
-        } catch (Exception e) {
-            Log.w(TAG, "readAirBlob: " + e.getClass().getSimpleName());
-            return null;
-        } finally {
-            data.recycle();
-            reply.recycle();
-        }
-    }
-
-    /** Reads the same guessed offset as readCabinTemp but as a flag. Offset is
-     * UNVERIFIED - see Snapshot for how a bad guess is handled. */
-    boolean isDefrostOn() {
-        byte[] b = readAirBlob();
-        return b != null && b.length >= 8 && b[8] != 0;
-    }
-
     boolean isBound() {
         return binder != null;
     }
@@ -142,27 +118,98 @@ final class CanClient {
     boolean tempUp()   { return callBoolean(TX_TEMP_UP); }
     boolean tempDown() { return callBoolean(TX_TEMP_DOWN); }
 
-    /** Reads the cabin setpoint. Only bytes 1-4 of the reply blob are known to
-     * carry airLeftTemperature as a float, so this is best-effort: it returns
-     * NaN when the blob does not decode, and the caller then skips the
-     * dead-band check instead of guessing. */
-    float readCabinTemp() {
-        if (binder == null) return Float.NaN;
+    /** Climate state as delivered by onAirConditionChanged / getAirCondition.
+     *
+     * Field order is taken from AirCondition.writeToParcel in the stock launcher's
+     * copy of the class - ten ints, then the floats. The earlier version guessed a
+     * float at bytes 4..7; it is actually slot 10, byte 40. Read as a Parcel stream
+     * in the same order the generated Stub uses, not by byte arithmetic. */
+    static final class AirState {
+        boolean acOn;          // airSWStatus
+        boolean acCompressor;  // airACStatus
+        float leftTemp;        // airLeftTemperature
+        float rightTemp;
+        float rearTemp;
+        int windSpeed;
+        int supply;
+    }
+
+    /** Registers an ICanBusServiceCallback object so the service pushes changes.
+     *  addCallback takes the callback's binder, so it is written as a strong reference
+     *  argument rather than a typed one. */
+    void callRegister(android.os.IBinder callback) {
+        if (binder == null) return;
+        Parcel d = Parcel.obtain();
+        Parcel r = Parcel.obtain();
+        try {
+            d.writeInterfaceToken(TOKEN);
+            d.writeStrongBinder(callback);
+            boolean ok = binder.transact(TX_ADD_CALLBACK, d, r, 0);
+            if (ok) { r.readException(); Log.i(TAG, "addCallback -> " + r.readInt()); }
+            else Log.w(TAG, "addCallback returned false");
+        } catch (Exception e) {
+            Log.e(TAG, "addCallback: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        } finally {
+            d.recycle();
+            r.recycle();
+        }
+    }
+
+    void callUnregister(android.os.IBinder callback) {
+        if (binder == null) return;
+        Parcel d = Parcel.obtain();
+        Parcel r = Parcel.obtain();
+        try {
+            d.writeInterfaceToken(TOKEN);
+            d.writeStrongBinder(callback);
+            if (binder.transact(TX_REMOVE_CALLBACK, d, r, 0)) { r.readException(); r.readInt(); }
+        } catch (Exception e) {
+            Log.w(TAG, "removeCallback: " + e.getClass().getSimpleName());
+        } finally {
+            d.recycle();
+            r.recycle();
+        }
+    }
+
+    static AirState readAirState(Parcel reply) {
+        AirState st = new AirState();
+        st.acOn = reply.readInt() != 0;      // airSWStatus
+        reply.readInt();                       // airACStatus
+        st.acCompressor = reply.readInt() != 0;
+        reply.readInt();                       // airHighWindStatus
+        reply.readInt();                       // airLowWindStatus
+        reply.readInt();                       // airDUALStatus
+        reply.readInt();                       // airMaxFrontStatus
+        reply.readInt();                       // airRearLightStatus
+        st.supply = reply.readInt();           // airSupplyStatus
+        reply.readInt();                       // airDisplaySW
+        st.windSpeed = reply.readInt();        // airWindSpeed
+        st.leftTemp = reply.readFloat();       // airLeftTemperature
+        st.rightTemp = reply.readFloat();
+        st.rearTemp = reply.readFloat();
+        return st;
+    }
+
+    AirState queryAir() {
+        AirState fallback = new AirState();
+        if (binder == null) { fallback.leftTemp = Float.NaN; return fallback; }
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         try {
             data.writeInterfaceToken(TOKEN);
-            if (!binder.transact(TX_GET_AIR_CONDITION, data, reply, 0)) return Float.NaN;
+            if (!binder.transact(TX_GET_AIR_CONDITION, data, reply, 0)) {
+                fallback.leftTemp = Float.NaN;
+                return fallback;
+            }
             reply.readException();
-            reply.setDataPosition(0);
-            byte[] raw = reply.marshall();
-            if (raw.length < 8) return Float.NaN;
-            int bits = (raw[4] & 0xff) | ((raw[5] & 0xff) << 8)
-                     | ((raw[6] & 0xff) << 16) | ((raw[7] & 0xff) << 24);
-            return Float.intBitsToFloat(bits);
+            AirState st = readAirState(reply);
+            Log.i(TAG, "queryAir: acOn=" + st.acOn + " leftTemp=" + st.leftTemp
+                    + " wind=" + st.windSpeed);
+            return st;
         } catch (Exception e) {
-            Log.w(TAG, "readCabinTemp: " + e.getClass().getSimpleName() + ": " + e.getMessage());
-            return Float.NaN;
+            Log.w(TAG, "queryAir: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            fallback.leftTemp = Float.NaN;
+            return fallback;
         } finally {
             data.recycle();
             reply.recycle();

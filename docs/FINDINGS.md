@@ -187,3 +187,52 @@ sget-object  AC_RAPID_COOLING_MODE
 - Смещение float внутри `getAirCondition` не проверено: приложение читает
   температуру по предположению и на всякий случай отбрасывает значения вне
   диапазона −40…+70 °C.
+
+## 9. События, а не опрос состояния
+
+Штатное приложение реагирует на выключение климата с руля мгновенно — значит
+сервис **пушит** события, а не ждёт, пока клиент сам спросит. Так и оказалось.
+
+`ICanBusServiceCallback` содержит 68 методов, среди которых:
+
+| Событие | Что даёт |
+|---|---|
+| `onAirConditionChanged(AirCondition)` | состояние климата целиком, включая признак включения и температуру |
+| `onAccStateChanged(int)` | состояние ACC — то самое, о котором пришлось гадать |
+| `onVehicleStateSettingResponse(VehicleState, boolean)` | ответ на нашу команду: принята или нет |
+| `onSmartCustomModeStatusChanged(boolean)` | ещё один живой канал |
+
+Регистрация: `addCallback` — код **27**, снятие — `removeCallback`, код **28**.
+
+Это отменяет поминутный опрос в пользу событий: реакция мгновенная, и главное —
+приходит **готовый объект**, а не блоб, в котором надо угадывать смещение.
+
+## 10. Порядок полей AirCondition — из байткода, не догадкой
+
+Первая версия приложения читала температуру как float по смещению 4 байта.
+Это было неверно. Порядок полей взят из `AirCondition.writeToParcel` в копии
+класса из штатного лаунчера:
+
+```
+слой  поле                   тип
+ 0    airSWStatus             int      <- признак "климат включён"
+ 1    airACStatus             int
+ 2    airHighWindStatus       int
+ 3    airLowWindStatus        int
+ 4    airDUALStatus           int
+ 5    airMaxFrontStatus       int
+ 6    airRearLightStatus      int
+ 7    airSupplyStatus         int
+ 8    airDisplaySW            int
+ 9    airWindSpeed            int
+10    airLeftTemperature      float    <- одиннадцатый слот, байт 40, а не 4
+11    airRightTemperature     float
+12    airRearTemperature      float
+```
+
+Читать надо как поток `Parcel` в том же порядке, в каком пишет сгенерированный
+Stub: сначала `int`-флаг присутствия, затем десять `readInt()` и `readFloat()`.
+Байтовая арифметика по `marshall()` здесь не нужна и неверна.
+
+Тот же приём спас с порядковым номером энума: чтение полей по алфавиту давало 2
+вместо 48, и только порядок заполнения `$VALUES` дал верный ответ.

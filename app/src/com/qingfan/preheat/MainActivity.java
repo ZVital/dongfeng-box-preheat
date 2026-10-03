@@ -148,7 +148,7 @@ public class MainActivity extends Activity {
     private void testNow() {
         final CanClient can = new CanClient(this);
         can.bind(new CanClient.Ready() { public void onBound() {
-            float t = can.readCabinTemp();
+            float t = can.queryAir().leftTemp;
             can.openAc();
             if (!Float.isNaN(t)) can.setTempTo(t, target);
             if (defrost) can.defrost(true);

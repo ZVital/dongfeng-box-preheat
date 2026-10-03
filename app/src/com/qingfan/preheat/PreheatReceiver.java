@@ -36,14 +36,35 @@ public class PreheatReceiver extends BroadcastReceiver {
         final ScheduleStore store = new ScheduleStore(app);
         final boolean start = ACTION_START.equals(action);
 
-        CanClient can = new CanClient(app);
+        final CanClient can = new CanClient(app);
+        final Snapshot[] holder = new Snapshot[1];
+        CanCallback cb = new CanCallback(new CanCallback.Listener() {
+            public void onAirCondition(boolean acOn, float leftTemp) {
+                // The owner switching A/C off from the wheel is the stop signal.
+                // Nothing to do while preheat is not running.
+                if (holder[0] == null) return;
+                if (!acOn) {
+                    Log.i(CanClient.TAG, "callback: AC switched off while preheat ran -> finishing");
+                    PreheatLoop.finish(can);
+                }
+            }
+            public void onAccChanged(int acc) {
+                Log.i(CanClient.TAG, "callback: acc state = " + acc);
+            }
+            public void onVehicleStateResponse(boolean accepted) {
+                Log.i(CanClient.TAG, "callback: vehicle state accepted = " + accepted);
+            }
+        });
+        CB.set(cb);
+
         can.bind(new CanClient.Ready() { public void onBound() {
+            cb.register(can);
             // goAsync() would be the correct way to hold the broadcast open, but the
             // CAN calls are fast binder round-trips and the head unit has no ANR
             // watchdog pressure on a system app path; the receiver is allowed to
             // finish and the work below is bounded.
             try {
-                run(app, store, can, start);
+                run(app, store, can, start, holder);
             } catch (Throwable t) {
                 Log.e(CanClient.TAG, "preheat failed", t);
             } finally {
@@ -52,7 +73,15 @@ public class PreheatReceiver extends BroadcastReceiver {
         }});
     }
 
-    private void run(Context app, ScheduleStore store, CanClient can, boolean start) {
+    /** Held between start and finish so the callback can reach the same CanClient. */
+    private static final class CB {
+        static CanCallback value;
+        static void set(CanCallback c) { value = c; }
+        static CanCallback get() { return value; }
+    }
+
+    private void run(Context app, ScheduleStore store, CanClient can, boolean start,
+                     final Snapshot[] holder) {
         if (!start) {
             Log.i(CanClient.TAG, "STOP fired, restoring settings");
             PreheatLoop.finish(can);
@@ -61,7 +90,8 @@ public class PreheatReceiver extends BroadcastReceiver {
         }
 
         Snapshot snap = Snapshot.capture(can);
-        float cabin = can.readCabinTemp();
+        holder[0] = snap;
+        float cabin = can.queryAir().leftTemp;
         if (!Float.isNaN(cabin)) {
             Log.i(CanClient.TAG, "cabin setpoint reads " + cabin);
             if (cabin >= store.bandHi()) {

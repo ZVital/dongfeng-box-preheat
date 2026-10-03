@@ -12,13 +12,10 @@ import android.util.Log;
  * alarm. The existing STOP alarm is the backstop: if the process is ever frozen the
  * timer stops with it, and the STOP alarm still shuts the climate down, just later.
  *
- * Two guards, both because readCabinTemp() is the one unverified thing in this app -
- * it guesses a float offset inside a Parcelable blob. On a 20 s tick a wrong reading
- * would otherwise be acted on ~180 times an hour:
- *   - a reading outside PLAUSIBLE_MIN..PLAUSIBLE_MAX is rejected and only logged;
- *   - the setpoint moves at most STEP_PER_TICK half-degrees per tick, so a bad
- *     reading can never drive it to an extreme.
- */
+ * The plausible-range guard is no longer about an unverified read: field order comes
+ * from the stock AirCondition.writeToParcel, so the parse is exact. It stays as a
+ * cheap sanity check because a misparsed Parcel would otherwise silently steer the
+ * setpoint, and the setpoint is only moved relatively. */
 final class PreheatLoop {
 
     private static final long PERIOD_MS = 60_000L;
@@ -90,7 +87,7 @@ final class PreheatLoop {
     }
 
     private void step() {
-        float cabin = can.readCabinTemp();
+        float cabin = can.queryAir().leftTemp;
 
         if (Float.isNaN(cabin)) {
             Log.w(CanClient.TAG, "tick: cabin unreadable, skipping");
@@ -105,10 +102,11 @@ final class PreheatLoop {
 
         if (cabin >= store.target() || cabin >= store.bandHi()) {
             Log.i(CanClient.TAG, "tick: cabin " + cabin + "C reached target "
-                    + store.target() + " / band " + store.bandHi() + ", shutting down");
-            can.closeAc();
-            if (store.defrost()) can.defrost(false);
-            running = false;
+                    + store.target() + " / band " + store.bandHi() + ", restoring");
+            // Must go through finish(), not closeAc(): finish() restores the
+            // snapshot. Calling closeAc() here left the setpoint wherever the
+            // heating had walked it. This was the bug.
+            finish(can);
             return;
         }
 
