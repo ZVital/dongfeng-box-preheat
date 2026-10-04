@@ -18,7 +18,7 @@ import android.util.Log;
  * setpoint, and the setpoint is only moved relatively. */
 final class PreheatLoop {
 
-    private static final long PERIOD_MS = 60_000L;
+    private static final long PERIOD_MS = 600_000L;
     private static final float PLAUSIBLE_MIN = -40f;
     private static final float PLAUSIBLE_MAX = 70f;
     private static final int STEP_PER_TICK = 2;
@@ -110,20 +110,6 @@ final class PreheatLoop {
             return;
         }
 
-        float gap = store.target() - cabin;
-        int steps = Math.round(gap * 2f);
-        if (steps > STEP_PER_TICK) steps = STEP_PER_TICK;
-        if (steps < -STEP_PER_TICK) steps = -STEP_PER_TICK;
-
-        if (steps != 0) {
-            boolean ok = true;
-            for (int i = 0; i < Math.abs(steps) && ok; i++) {
-                ok = steps > 0 ? can.tempUp() : can.tempDown();
-            }
-            Log.i(CanClient.TAG, "tick: cabin " + cabin + "C -> target " + store.target()
-                    + "C, " + (ok ? steps : 0) + " steps" + (ok ? "" : " (stopped early)"));
-        } else {
-            Log.i(CanClient.TAG, "tick: cabin " + cabin + "C, holding");
-        }
+        Log.i(CanClient.TAG, "tick: cabin " + cabin + "C, holding");
     }
 }

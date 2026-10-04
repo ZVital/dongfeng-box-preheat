@@ -32,8 +32,8 @@ final class CanClient {
     static final int TX_CLOSE_AC = 89;
     static final int TX_OPEN_DEFROST = 92;
     static final int TX_CLOSE_DEFROST = 93;
-    static final int TX_TEMP_UP = 94;
-    static final int TX_TEMP_DOWN = 95;
+    // 94/95 (setAirLeftTemperatureUp/Down) найдены, но намеренно не
+    // используются: единственный способ выставить уставку. См. CAN-MAP.
 
     interface Ready {
         void onBound();
@@ -115,24 +115,6 @@ final class CanClient {
         Log.i(TAG, "front defroster " + (on ? "on" : "off") + " -> " + r);
         return r;
     }
-    boolean tempUp()   { return callBoolean(TX_TEMP_UP); }
-    boolean tempDown() { return callBoolean(TX_TEMP_DOWN); }
-
-    /** Climate state as delivered by onAirConditionChanged / getAirCondition.
-     *
-     * Field order is taken from AirCondition.writeToParcel in the stock launcher's
-     * copy of the class - ten ints, then the floats. The earlier version guessed a
-     * float at bytes 4..7; it is actually slot 10, byte 40. Read as a Parcel stream
-     * in the same order the generated Stub uses, not by byte arithmetic. */
-    static final class AirState {
-        boolean acOn;          // airSWStatus
-        boolean acCompressor;  // airACStatus
-        float leftTemp;        // airLeftTemperature
-        float rightTemp;
-        float rearTemp;
-        int windSpeed;
-        int supply;
-    }
 
     /** Registers an ICanBusServiceCallback object so the service pushes changes.
      *  addCallback takes the callback's binder, so it is written as a strong reference
@@ -169,6 +151,21 @@ final class CanClient {
             d.recycle();
             r.recycle();
         }
+    }
+
+    /** Climate state, fields in the order AirCondition.writeToParcel writes them:
+     *  ten ints then the floats. Taken from the stock launcher's copy of the class,
+     *  not guessed - the earlier build read a float at byte 4 and was wrong.
+     *  airLeftTemperature is NOT yet confirmed to be the measured cabin temperature
+     *  rather than the requested setpoint; see CAN-MAP.md section 4. */
+    static final class AirState {
+        boolean acOn;          // airSWStatus
+        boolean acCompressor;  // airACStatus
+        float leftTemp;        // airLeftTemperature
+        float rightTemp;
+        float rearTemp;
+        int windSpeed;
+        int supply;
     }
 
     static AirState readAirState(Parcel reply) {
@@ -220,15 +217,4 @@ final class CanClient {
      * setAirLeftTemperatureUp/Down with no absolute setter, so this is the only
      * way to reach a target. The step count is capped so a bad reading cannot
      * drive the setpoint to an extreme. */
-    boolean setTempTo(float current, float target) {
-        int steps = Math.round((target - current) * 2f);
-        if (steps > 40) steps = 40;
-        if (steps < -40) steps = -40;
-        Log.i(TAG, "temp " + current + " -> " + target + " (" + steps + " steps)");
-        for (int i = 0; i < Math.abs(steps); i++) {
-            boolean ok = steps > 0 ? tempUp() : tempDown();
-            if (!ok) { Log.w(TAG, "temp step failed at " + i); return false; }
-        }
-        return true;
-    }
 }

@@ -150,10 +150,9 @@ public class MainActivity extends Activity {
         can.bind(new CanClient.Ready() { public void onBound() {
             float t = can.queryAir().leftTemp;
             can.openAc();
-            if (!Float.isNaN(t)) can.setTempTo(t, target);
             if (defrost) can.defrost(true);
             log("проверка: температура " + (Float.isNaN(t) ? "не читается" : t + "C")
-                    + " -> цель " + target + "C");
+                    + ", цель " + target + "C, климат включён");
         }});
     }
 

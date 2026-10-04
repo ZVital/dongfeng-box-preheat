@@ -40,11 +40,17 @@ public class PreheatReceiver extends BroadcastReceiver {
         final Snapshot[] holder = new Snapshot[1];
         CanCallback cb = new CanCallback(new CanCallback.Listener() {
             public void onAirCondition(boolean acOn, float leftTemp) {
-                // The owner switching A/C off from the wheel is the stop signal.
-                // Nothing to do while preheat is not running.
+                // Primary stop path. Nothing to do while preheat is not running.
                 if (holder[0] == null) return;
                 if (!acOn) {
                     Log.i(CanClient.TAG, "callback: AC switched off while preheat ran -> finishing");
+                    PreheatLoop.finish(can);
+                    return;
+                }
+                float target = holder[0].targetC();
+                if (!Float.isNaN(leftTemp) && !Float.isNaN(target) && leftTemp >= target) {
+                    Log.i(CanClient.TAG, "callback: cabin " + leftTemp + "C reached target "
+                            + target + "C -> finishing");
                     PreheatLoop.finish(can);
                 }
             }
@@ -89,7 +95,7 @@ public class PreheatReceiver extends BroadcastReceiver {
             return;
         }
 
-        Snapshot snap = Snapshot.capture(can);
+        Snapshot snap = Snapshot.capture(can, store.target());
         holder[0] = snap;
         float cabin = can.queryAir().leftTemp;
         if (!Float.isNaN(cabin)) {
@@ -103,10 +109,11 @@ public class PreheatReceiver extends BroadcastReceiver {
             Log.w(CanClient.TAG, "cabin temp unreadable, proceeding without dead band");
         }
 
+        // Preheat is just "turn the climate on". The setpoint is deliberately left
+        // alone: airLeftTemperature is not yet confirmed to be the measured cabin
+        // temperature rather than the requested setpoint, and stepping Up/Down off
+        // an unverified reading is how the setpoint ends up somewhere extreme.
         can.openAc();
-        if (!Float.isNaN(cabin)) {
-            can.setTempTo(cabin, store.target());
-        }
         if (store.defrost()) can.defrost(true);
         PreheatLoop.start(app, can, snap);
         Log.i(CanClient.TAG, "START done. " + store.describe());
