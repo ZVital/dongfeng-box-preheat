@@ -28,6 +28,7 @@ final class CanClient {
     static final int TX_ADD_CALLBACK = 27;
     static final int TX_REMOVE_CALLBACK = 28;
     static final int TX_GET_AIR_CONDITION = 29;
+    static final int TX_GET_AMBIENT_TEMP = 6;
     static final int TX_OPEN_AC = 88;
     static final int TX_CLOSE_AC = 89;
     static final int TX_OPEN_DEFROST = 92;
@@ -161,51 +162,87 @@ final class CanClient {
     static final class AirState {
         boolean acOn;          // airSWStatus
         boolean acCompressor;  // airACStatus
-        float leftTemp;        // airLeftTemperature
+        float setpoint;        // airLeftTemperature (slot 10) - commanded, NOT cabin
         float rightTemp;
         float rearTemp;
         int windSpeed;
         int supply;
+        int cabinTemp;         // airTempInCar  (slot 33), 0x7FFFFFFF = not reported
+        int outsideTemp;       // airTempOutCar (slot 34), 0x7FFFFFFF = not reported
     }
 
     static AirState readAirState(Parcel reply) {
         AirState st = new AirState();
-        st.acOn = reply.readInt() != 0;      // airSWStatus
-        reply.readInt();                       // airACStatus
-        st.acCompressor = reply.readInt() != 0;
-        reply.readInt();                       // airHighWindStatus
-        reply.readInt();                       // airLowWindStatus
-        reply.readInt();                       // airDUALStatus
-        reply.readInt();                       // airMaxFrontStatus
-        reply.readInt();                       // airRearLightStatus
-        st.supply = reply.readInt();           // airSupplyStatus
-        reply.readInt();                       // airDisplaySW
-        st.windSpeed = reply.readInt();        // airWindSpeed
-        st.leftTemp = reply.readFloat();       // airLeftTemperature
-        st.rightTemp = reply.readFloat();
-        st.rearTemp = reply.readFloat();
+        st.cabinTemp = Integer.MIN_VALUE;
+        st.outsideTemp = Integer.MIN_VALUE;
+        // AIDL writes the Parcelable as: int presence, then the object's own
+        // fields. Skipping the presence flag is what makes the slots line up -
+        // without it every read is shifted by one and returns denormal garbage.
+        if (reply.readInt() == 0) return st;
+        st.acOn = reply.readInt() != 0;      // 0  airSWStatus
+        reply.readInt();                       // 1  airACStatus
+        st.acCompressor = reply.readInt() != 0;// 2  airHighWindStatus
+        // 3..9  airLowWind, DUAL, MaxFront, RearLight, Supply, DisplaySW, WindSpeed
+        for (int i = 3; i <= 9; i++) {
+            if (i == 9) st.windSpeed = reply.readInt(); else reply.readInt();
+        }
+        st.setpoint = reply.readFloat();       // 10 airLeftTemperature - SETPOINT
+        st.rightTemp = reply.readFloat();      // 11
+        st.rearTemp = reply.readFloat();       // 12
+        // 13..32  airCirculationMode, seat heating, mode flags, vents...
+        for (int i = 13; i <= 32; i++) {
+            if (i == 19) st.supply = reply.readInt(); else reply.readInt();
+        }
+        st.cabinTemp = reply.readInt();        // 33 airTempInCar  - CABIN
+        st.outsideTemp = reply.readInt();      // 34 airTempOutCar - OUTSIDE
         return st;
+
+    }
+
+    /** Outside temperature, raw integer exactly as the service returns it.
+     *  No scaling is applied on purpose: the value is logged raw so it can be
+     *  compared against what the head unit shows and the scale decided from
+     *  evidence rather than guessed. */
+    int queryAmbientRaw() {
+        if (binder == null) return Integer.MIN_VALUE;
+        Parcel d = Parcel.obtain();
+        Parcel r = Parcel.obtain();
+        try {
+            d.writeInterfaceToken(TOKEN);
+            if (!binder.transact(TX_GET_AMBIENT_TEMP, d, r, 0)) return Integer.MIN_VALUE;
+            r.readException();
+            int v = r.readInt();
+            Log.i(TAG, "queryAmbientRaw -> " + v + " (raw, unscaled)");
+            return v;
+        } catch (Exception e) {
+            Log.w(TAG, "queryAmbientRaw: " + e.getClass().getSimpleName());
+            return Integer.MIN_VALUE;
+        } finally {
+            d.recycle();
+            r.recycle();
+        }
     }
 
     AirState queryAir() {
         AirState fallback = new AirState();
-        if (binder == null) { fallback.leftTemp = Float.NaN; return fallback; }
+        if (binder == null) { fallback.setpoint = Float.NaN; return fallback; }
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         try {
             data.writeInterfaceToken(TOKEN);
             if (!binder.transact(TX_GET_AIR_CONDITION, data, reply, 0)) {
-                fallback.leftTemp = Float.NaN;
+                fallback.setpoint = Float.NaN;
                 return fallback;
             }
             reply.readException();
             AirState st = readAirState(reply);
-            Log.i(TAG, "queryAir: acOn=" + st.acOn + " leftTemp=" + st.leftTemp
+            Log.i(TAG, "queryAir: acOn=" + st.acOn + " cabin=" + st.cabinTemp
+                    + " outside=" + st.outsideTemp + " setpoint=" + st.setpoint
                     + " wind=" + st.windSpeed);
             return st;
         } catch (Exception e) {
             Log.w(TAG, "queryAir: " + e.getClass().getSimpleName() + ": " + e.getMessage());
-            fallback.leftTemp = Float.NaN;
+            fallback.setpoint = Float.NaN;
             return fallback;
         } finally {
             data.recycle();

@@ -27,7 +27,7 @@ import android.util.Log;
 final class CanCallback extends Binder {
 
     interface Listener {
-        void onAirCondition(boolean acOn, float leftTemp);
+        void onAirCondition(boolean acOn, int cabinTemp, float setpoint);
         void onAccChanged(int acc);
         void onVehicleStateResponse(boolean accepted);
     }
@@ -65,7 +65,7 @@ final class CanCallback extends Binder {
                     data.enforceInterface(DESCRIPTOR);
                     if (data.readInt() != 0) {
                         CanClient.AirState st = CanClient.readAirState(data);
-                        listener.onAirCondition(st.acOn, st.leftTemp);
+                        listener.onAirCondition(st.acOn, st.cabinTemp, st.setpoint);
                     }
                     if (reply != null) reply.writeNoException();
                     return true;

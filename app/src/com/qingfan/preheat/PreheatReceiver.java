@@ -39,7 +39,7 @@ public class PreheatReceiver extends BroadcastReceiver {
         final CanClient can = new CanClient(app);
         final Snapshot[] holder = new Snapshot[1];
         CanCallback cb = new CanCallback(new CanCallback.Listener() {
-            public void onAirCondition(boolean acOn, float leftTemp) {
+            public void onAirCondition(boolean acOn, int cabinTemp, float setpoint) {
                 // Primary stop path. Nothing to do while preheat is not running.
                 if (holder[0] == null) return;
                 if (!acOn) {
@@ -47,12 +47,8 @@ public class PreheatReceiver extends BroadcastReceiver {
                     PreheatLoop.finish(can);
                     return;
                 }
-                float target = holder[0].targetC();
-                if (!Float.isNaN(leftTemp) && !Float.isNaN(target) && leftTemp >= target) {
-                    Log.i(CanClient.TAG, "callback: cabin " + leftTemp + "C reached target "
-                            + target + "C -> finishing");
-                    PreheatLoop.finish(can);
-                }
+                // leftTemp is the setpoint, so it cannot signal "cabin reached target".
+                // Only the owner's own A/C-off is acted on here.
             }
             public void onAccChanged(int acc) {
                 Log.i(CanClient.TAG, "callback: acc state = " + acc);
@@ -97,17 +93,14 @@ public class PreheatReceiver extends BroadcastReceiver {
 
         Snapshot snap = Snapshot.capture(can, store.target());
         holder[0] = snap;
-        float cabin = can.queryAir().leftTemp;
-        if (!Float.isNaN(cabin)) {
-            Log.i(CanClient.TAG, "cabin setpoint reads " + cabin);
-            if (cabin >= store.bandHi()) {
-                Log.i(CanClient.TAG, "cabin already at/above band, skipping");
-                snap.restore(can);
-                return;
-            }
-        } else {
-            Log.w(CanClient.TAG, "cabin temp unreadable, proceeding without dead band");
-        }
+        // AirCondition.airLeftTemperature is the SETPOINT, not the measured cabin
+        // temperature - confirmed against the head unit on 2026-10-04, where the
+        // dock and this read both showed the commanded value. So the dead band
+        // must NOT be compared against it: the setpoint always equals the target,
+        // which made "cabin >= bandHi" unconditionally true and skipped preheat
+        // entirely. The band is therefore not applied at start.
+        Log.i(CanClient.TAG, "cabin=" + can.queryAir().cabinTemp + " setpoint=" + can.queryAir().setpoint
+                + " (setpoint, not cabin temp); dead band not applied at start");
 
         // Preheat is just "turn the climate on". The setpoint is deliberately left
         // alone: airLeftTemperature is not yet confirmed to be the measured cabin

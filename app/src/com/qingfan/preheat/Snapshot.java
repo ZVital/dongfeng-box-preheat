@@ -27,9 +27,9 @@ final class Snapshot {
     static Snapshot capture(CanClient can, float target) {
         CanClient.AirState st = can.queryAir();
         Log.i(CanClient.TAG, "snapshot: ac=" + yn(st.acOn)
-                + " leftTemp=" + (Float.isNaN(st.leftTemp) ? "unreadable" : st.leftTemp + "C")
+                + " setpoint=" + (Float.isNaN(st.setpoint) ? "unreadable" : st.setpoint + "C")
                 + " target=" + target + "C");
-        return new Snapshot(st.acOn, st.leftTemp, target);
+        return new Snapshot(st.acOn, st.setpoint, target);
     }
 
     float targetC() { return target; }

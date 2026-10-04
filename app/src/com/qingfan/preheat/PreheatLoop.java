@@ -87,7 +87,7 @@ final class PreheatLoop {
     }
 
     private void step() {
-        float cabin = can.queryAir().leftTemp;
+        float cabin = can.queryAir().setpoint;
 
         if (Float.isNaN(cabin)) {
             Log.w(CanClient.TAG, "tick: cabin unreadable, skipping");
@@ -100,7 +100,10 @@ final class PreheatLoop {
         }
         if (rejected > 0) { rejected = 0; Log.i(CanClient.TAG, "tick: cabin reading sane again: " + cabin + "C"); }
 
-        if (cabin >= store.target() || cabin >= store.bandHi()) {
+        // cabin here is the SETPOINT, not the measured cabin temperature, so it
+        // cannot decide "target reached". Preheating ends on the owner's A/C-off,
+        // on the STOP alarm, or when the loop is simply cancelled.
+        if (false) {
             Log.i(CanClient.TAG, "tick: cabin " + cabin + "C reached target "
                     + store.target() + " / band " + store.bandHi() + ", restoring");
             // Must go through finish(), not closeAc(): finish() restores the

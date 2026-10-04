@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 
     private final boolean[] dayBtn = new boolean[7];
     private final Button[] dayViews = new Button[7];
-    private TextView startLabel, stopLabel, targetLabel, bandLabel;
+    private TextView startLabel, stopLabel, targetLabel, bandLabel, nowLabel;
 
     @Override
     protected void onCreate(Bundle b) {
@@ -99,6 +99,18 @@ public class MainActivity extends Activity {
         sv.setFillViewport(true);
         root.addView(sv, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f));
+
+        LinearLayout nowCard = card();
+        nowCard.addView(label("Сейчас"));
+        nowLabel = label("показания ещё не прочитаны");
+        nowLabel.setTextColor(TEXT);
+        nowLabel.setTextSize(17);
+        nowCard.addView(nowLabel);
+        LinearLayout nowWrap = new LinearLayout(this);
+        nowWrap.setOrientation(LinearLayout.VERTICAL);
+        nowWrap.setPadding(0, dp(6), 0, 0);
+        nowWrap.addView(nowCard);
+        root.addView(nowWrap);
 
         root.addView(cycleRow());
         root.addView(bandRow());
@@ -148,12 +160,34 @@ public class MainActivity extends Activity {
     private void testNow() {
         final CanClient can = new CanClient(this);
         can.bind(new CanClient.Ready() { public void onBound() {
-            float t = can.queryAir().leftTemp;
+            CanClient.AirState st = can.queryAir();
             can.openAc();
             if (defrost) can.defrost(true);
-            log("проверка: температура " + (Float.isNaN(t) ? "не читается" : t + "C")
-                    + ", цель " + target + "C, климат включён");
+            showNow(st);
+            log("проверка: салон " + fmtTemp(st.cabinTemp) + ", улица " + fmtTemp(st.outsideTemp)
+                    + ", уставка " + (Float.isNaN(st.setpoint) ? "?" : st.setpoint)
+                    + ", климат включён");
         }});
+    }
+
+    /** Shows what the car actually reports. The setpoint and the ambient value are
+     *  the only two we can read right now: the measured cabin temperature is not
+     *  exposed anywhere in the AIDL yet, so we do not pretend to show it. */
+    private void showNow(CanClient.AirState st) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("в салоне: ").append(fmtTemp(st.cabinTemp));
+        sb.append("\nна улице: ").append(fmtTemp(st.outsideTemp));
+        sb.append("\nуставка:   ").append(Float.isNaN(st.setpoint) ? "?" : st.setpoint + " °C");
+        if (nowLabel != null) nowLabel.setText(sb.toString());
+    }
+
+    /** airTempInCar / airTempOutCar are plain whole degrees: measured on the car,
+     *  airTempOutCar returned 17 while the head unit showed 17 °C. No scaling.
+     *  -1 is the vendor's "not reported" sentinel, and on this box airTempInCar
+     *  is always -1 - the cabin temperature simply is not fed to the unit. */
+    private static String fmtTemp(int raw) {
+        if (raw == Integer.MIN_VALUE || raw == -1) return "не передаётся";
+        return raw + " °C";
     }
 
     private void refresh() {
