@@ -55,7 +55,7 @@ final class PreheatLoop {
 
     private static PreheatLoop active;
 
-    static synchronized void start(Context ctx, CanClient can, Snapshot snap) {
+    static synchronized void begin(Context ctx, CanClient can, Snapshot snap) {
         stop();
         ScheduleStore store = new ScheduleStore(ctx);
         active = new PreheatLoop(store, can, snap);
@@ -77,6 +77,11 @@ final class PreheatLoop {
         else { can.closeAc(); if (l.store.defrost()) can.defrost(false); }
         Log.i(CanClient.TAG, "loop finished");
     }
+
+    /** True while preheat is running. The callback uses this instead of a
+     *  snapshot reference: the snapshot lives inside the active loop, so the
+     *  owner no longer has to hand one over. */
+    static synchronized boolean isActive() { return active != null; }
 
     static synchronized void stop() {
         if (active == null) return;

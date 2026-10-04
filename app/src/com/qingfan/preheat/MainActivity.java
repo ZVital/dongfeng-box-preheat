@@ -136,14 +136,6 @@ public class MainActivity extends Activity {
         actions.setGravity(Gravity.CENTER);
         actions.setPadding(0, dp(8), 0, dp(10));
         actions.addView(pill("ОКЕЙ", VIOLET_BRIGHT, Color.WHITE, new View.OnClickListener() { public void onClick(View v) { save(); } }));
-        actions.addView(pill("90 AUTO", VIOLET, Color.WHITE, new View.OnClickListener() {
-            public void onClick(View v) {
-                final CanClient c = new CanClient(MainActivity.this);
-                c.bind(new CanClient.Ready() { public void onBound() {
-                    log("AUTO: " + c.autoMode());
-                }});
-            }
-        }));
         actions.addView(pill("ПРОВЕРИТЬ СЕЙЧАС", VIOLET, Color.WHITE, new View.OnClickListener() { public void onClick(View v) { testNow(); } }));
         root.addView(actions);
 
@@ -173,40 +165,21 @@ public class MainActivity extends Activity {
     /** Runs exactly the sequence the alarm runs, so this button really tests the
      *  shipped path - including moving the setpoint. Earlier this only called
      *  openAc(), which is why the setpoint never changed when testing here. */
+    /** Runs exactly the path the alarm runs, with what is on screen right now -
+     *  not the last saved values. Same entry point as PreheatReceiver. */
     private void testNow() {
         final CanClient can = new CanClient(this);
-        final ScheduleStore store = new ScheduleStore(this);
-        can.bind(new CanClient.Ready() { public void onBound() {
-            CanClient.AirState st = can.queryAir();
-            showNow(st);
-            float from = st.setpoint;
-
-            boolean ok = auto ? can.autoMode() : can.openAc();
-            log("климат включён: " + ok + (auto ? " (AUTO)" : ""));
-
-            if (!auto) {
-                // AUTO owns the setpoint, so leave it before stepping.
-                can.closeAutoMode();
-                // And the car must report the climate running: S31 ignores the
-                // step while AirSWStatus is off and substitutes 25.0C.
-                boolean on = can.awaitAcOn(4000);
-                log("климат " + (on ? "включился" : "НЕ включился, уставку не трогаю"));
-                if (!on) {
-                    if (defrost) can.defrost(true);
-                    return;
+        CanCallback cb = new CanCallback(new CanCallback.Listener() {
+            public void onAirCondition(boolean acOn, int cabinTemp, float setpoint) {
+                if (!acOn && PreheatLoop.isActive()) {
+                    log("выключили A/C -> завершаю прогрев");
+                    PreheatLoop.finish(can);
                 }
             }
-
-            if (!auto && !Float.isNaN(from) && Math.abs(from - store.target()) >= 0.25f) {
-                can.setTempDirect(store.target());
-                log("уставка " + from + " -> задана " + store.target());
-            } else if (auto) {
-                log("в AUTO уставку не трогаем, контур у машины");
-            } else {
-                log("уставка уже " + from + ", не меняю");
-            }
-            if (defrost) can.defrost(true);
-        }});
+            public void onAccChanged(int acc) { }
+            public void onVehicleStateResponse(boolean accepted) { }
+        });
+        PreheatStarter.start(this, can, cb, target, auto, defrost);
     }
 
     /** Shows what the car actually reports. The setpoint and the ambient value are

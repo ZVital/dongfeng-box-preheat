@@ -60,34 +60,15 @@ final class CanCallback extends Binder {
     @Override
     protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
         try {
-            switch (code) {
-                case 4: { // onAirConditionChanged(AirCondition)
-                    data.enforceInterface(DESCRIPTOR);
-                    if (data.readInt() != 0) {
-                        CanClient.AirState st = CanClient.readAirState(data);
-                        listener.onAirCondition(st.acOn, st.cabinTemp, st.setpoint);
-                    }
-                    if (reply != null) reply.writeNoException();
-                    return true;
-                }
-                case 3:   // onAccStateChanged(int)
-                    data.enforceInterface(DESCRIPTOR);
-                    listener.onAccChanged(data.readInt());
-                    return true;
-                case 40:  // onVehicleStateSettingResponse(VehicleState, boolean)
-                    data.enforceInterface(DESCRIPTOR);
-                    if (data.readInt() != 0) data.readInt();   // VehicleState, unused
-                    listener.onVehicleStateResponse(data.readInt() != 0);
-                    if (reply != null) reply.writeNoException();
-                    return true;
-                default:
-                    // Log the code instead of guessing at it: the mapping from AIDL
-                    // method index to transaction number is not recorded anywhere, so
-                    // the first real run tells us what the rest are.
-                    if (!reportOnce(code)) return true;
-                    if (reply != null) reply.writeNoException();
-                    return true;
-            }
+            // Every code goes to the measuring path. The previous cases were
+            // guesses (4 = onAirConditionChanged, 3 = onAccStateChanged,
+            // 40 = onVehicleStateSettingResponse) and none was ever verified.
+            // Code 4 is now known to be wrong: toggling the climate produced 16,
+            // not 4. A wrong case silently swallows the event and stops it from
+            // ever being identified, so there are no cases at all - just measure.
+            if (reportOnce(code)) dump(code, data, flags);
+            if (reply != null) reply.writeNoException();
+            return true;
         } catch (Exception e) {
             Log.e(CanClient.TAG, "callback onTransact code=" + code, e);
             return true;
@@ -95,13 +76,60 @@ final class CanCallback extends Binder {
     }
 
     private static String DESCRIPTOR = "com.qinggan.canbus.ICanBusServiceCallback";
-    private final java.util.Set<Integer> reported = new java.util.HashSet<Integer>();
+    private final java.util.Map<Integer, Integer> reported = new java.util.HashMap<Integer, Integer>();
 
-    /** @return true the first time this code is seen, so each one logs only once. */
+    /** Best-effort dump of a callback payload.
+     *
+     *  Everything is guarded and the parcel position is always restored, because a
+     *  throw here would leave the transaction unanswered and stall the service.
+     *  The intent log tries to skip the interface token like AIDL does, then reports
+     *  both readings: as a string plus four ints, and as raw bytes. Whichever is
+     *  meaningful identifies the event. */
+    private void dump(int code, Parcel data, int flags) {
+        int start = data.dataPosition();
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("code=").append(code).append(" flags=").append(flags)
+              .append(" size=").append(data.dataSize()).append(" |");
+            try {
+                data.enforceInterface(DESCRIPTOR);
+                sb.append(" token=ok");
+            } catch (Exception e) {
+                sb.append(" token=").append(e.getClass().getSimpleName());
+                data.setDataPosition(start);
+            }
+            for (int i = 0; i < 4; i++) {
+                int v = data.readInt();
+                sb.append(" int[").append(i).append("]=").append(v);
+            }
+            Log.i(CanClient.TAG, "  dump " + sb);
+        } catch (Throwable t) {
+            Log.w(CanClient.TAG, "  dump code=" + code + " " + t.getClass().getSimpleName());
+        } finally {
+            try { data.setDataPosition(start); } catch (Throwable ignored) { }
+        }
+        try {
+            byte[] raw = data.marshall();
+            int n = Math.min(raw.length, 40);
+            StringBuilder hex = new StringBuilder();
+            for (int i = 0; i < n; i++) hex.append(String.format("%02x ", raw[i]));
+            Log.i(CanClient.TAG, "  raw code=" + code + " (" + raw.length + "B): " + hex);
+        } catch (Throwable t) {
+            Log.w(CanClient.TAG, "  raw code=" + code + " unavailable");
+        }
+    }
+
+    /** @return true for the first few times a code is seen.
+     *
+     *  Not just once: the climate callback fires on every state change, and one
+     *  dump taken at the wrong moment identifies nothing. Three is enough to see
+     *  the value before and after a toggle without flooding the log. */
     private boolean reportOnce(int code) {
-        if (!reported.add(code)) return false;
-        Log.i(CanClient.TAG, "callback: unhandled transaction code " + code
-                + " - acknowledging without decoding");
+        Integer n = reported.get(code);
+        if (n != null && n >= 3) return false;
+        reported.put(code, n == null ? 1 : n + 1);
+        Log.i(CanClient.TAG, "callback: undecoded transaction code " + code
+                + " (dump " + (n == null ? 1 : n + 1) + " of 3)");
         return true;
     }
 }
