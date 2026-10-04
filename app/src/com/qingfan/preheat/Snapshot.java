@@ -56,8 +56,28 @@ final class Snapshot {
             Log.i(CanClient.TAG, "restore: AC was off, closed");
         }
 
-        // The setpoint is never moved by preheat, so there is nothing to walk back.
-        // Only the climate on/off state was changed, and that is restored above.
+        // Preheat DOES move the setpoint, so it is walked back to what the owner
+        // had. The climate must still be on for Up/Down to do anything, so this
+        // runs before closeAc() in the normal path - see finish().
+        restoreSetpoint(can);
         Log.i(CanClient.TAG, "restore done");
+    }
+
+    void restoreSetpoint(CanClient can) {
+        if (!setpointKnown()) {
+            Log.w(CanClient.TAG, "restore: original setpoint unknown, leaving it");
+            return;
+        }
+        float now = can.queryAir().setpoint;
+        if (Float.isNaN(now)) {
+            Log.w(CanClient.TAG, "restore: setpoint now unreadable, leaving it");
+            return;
+        }
+        if (Math.abs(now - setpoint) < 0.25f) {
+            Log.i(CanClient.TAG, "restore: setpoint already at " + setpoint);
+            return;
+        }
+        can.setTempTo(now, setpoint);
+        Log.i(CanClient.TAG, "restore: setpoint back to " + setpoint);
     }
 }

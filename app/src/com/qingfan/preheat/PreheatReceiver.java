@@ -106,7 +106,36 @@ public class PreheatReceiver extends BroadcastReceiver {
         // alone: airLeftTemperature is not yet confirmed to be the measured cabin
         // temperature rather than the requested setpoint, and stepping Up/Down off
         // an unverified reading is how the setpoint ends up somewhere extreme.
+        // AUTO hands the closed loop to the car's own ECU: it picks the blower
+        // speed and stops when warm. We then do NOT touch the setpoint, because
+        // the car owns it. In plain mode we drive the setpoint ourselves.
+        if (store.isAuto()) {
+            can.autoMode();
+            can.defrost(store.defrost());
+            PreheatLoop.start(app, can, snap);
+            Log.i(CanClient.TAG, "START done (AUTO). " + store.describe());
+            return;
+        }
+
+        // Leave AUTO first: while it is on, the car owns the setpoint and our
+        // Up/Down presses are ignored (measured on the car).
+        can.closeAutoMode();
         can.openAc();
+        // Preheat uses its own setpoint, then Snapshot.restoreSetpoint() walks it
+        // back to whatever the owner had. The setpoint has to be moved while the
+        // climate is on, so this goes after openAc().
+        if (!can.awaitAcOn(5000)) {
+            Log.i(CanClient.TAG, "climate never reported running, setpoint left alone");
+            can.closeAc();
+            return;
+        }
+        float setpoint = can.queryAir().setpoint;
+        if (!Float.isNaN(setpoint) && Math.abs(setpoint - store.target()) >= 0.25f) {
+            can.setTempDirect(store.target());
+            Log.i(CanClient.TAG, "preheat setpoint " + setpoint + " -> " + store.target());
+        } else {
+            Log.i(CanClient.TAG, "preheat setpoint already at target, untouched");
+        }
         if (store.defrost()) can.defrost(true);
         PreheatLoop.start(app, can, snap);
         Log.i(CanClient.TAG, "START done. " + store.describe());

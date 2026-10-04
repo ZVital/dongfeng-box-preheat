@@ -11,6 +11,7 @@ final class ScheduleStore {
 
     private static final String F = "preheat";
     private static final String K_ENABLED = "enabled";
+    private static final String K_AUTO = "auto";   // 1 = отдать контур машине
     private static final String K_START_H = "start_h";
     private static final String K_START_M = "start_m";
     private static final String K_STOP_H = "stop_h";
@@ -29,6 +30,9 @@ final class ScheduleStore {
     }
 
     boolean isEnabled()      { return sp.getBoolean(K_ENABLED, false); }
+    /** AUTO: the vehicle's own ECU runs the closed loop. Off: we drive the
+     *  setpoint ourselves with Up/Down steps. */
+    boolean isAuto()         { return sp.getBoolean(K_AUTO, false); }
     int startHour()          { return sp.getInt(K_START_H, 7); }
     int startMinute()        { return sp.getInt(K_START_M, 0); }
     int stopHour()           { return sp.getInt(K_STOP_H, 8); }
@@ -42,9 +46,10 @@ final class ScheduleStore {
 
     void save(boolean enabled, int sh, int sm, int ph, int pm,
               int repeat, int days, float target,
-              float bandLo, float bandHi, boolean defrost) {
+              float bandLo, float bandHi, boolean defrost, boolean auto) {
         sp.edit()
           .putBoolean(K_ENABLED, enabled)
+          .putBoolean(K_AUTO, auto)
           .putInt(K_START_H, sh).putInt(K_START_M, sm)
           .putInt(K_STOP_H, ph).putInt(K_STOP_M, pm)
           .putInt(K_REPEAT, repeat).putInt(K_DAYS, days)
@@ -106,7 +111,8 @@ final class ScheduleStore {
              + "  старт " + fmt(startHour()) + ":" + fmt(startMinute())
              + "  стоп " + fmt(stopHour()) + ":" + fmt(stopMinute())
              + "  цель " + target() + "C"
-             + "  зона " + bandLo() + ".." + bandHi();
+             + "  зона " + bandLo() + ".." + bandHi()
+             + (isAuto() ? "  [AUTO]" : "");
     }
 
     private static String fmt(int v) { return v < 10 ? "0" + v : String.valueOf(v); }

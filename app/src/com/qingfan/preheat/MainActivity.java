@@ -50,6 +50,8 @@ public class MainActivity extends Activity {
     private float target;
     private float bandLo, bandHi;
     private boolean defrost = true;
+    private boolean auto = false;
+    private Button autoBtn, plainBtn;
 
     private final boolean[] dayBtn = new boolean[7];
     private final Button[] dayViews = new Button[7];
@@ -64,6 +66,7 @@ public class MainActivity extends Activity {
         repeat = store.repeat();   days = store.days();
         target = store.target();   bandLo = store.bandLo(); bandHi = store.bandHi();
         defrost = store.defrost();
+        auto = store.isAuto();
         for (int i = 0; i < 7; i++) dayBtn[i] = (days & (1 << i)) != 0;
 
         LinearLayout root = new LinearLayout(this);
@@ -112,6 +115,8 @@ public class MainActivity extends Activity {
         nowWrap.addView(nowCard);
         root.addView(nowWrap);
 
+        root.addView(modeRow());
+
         root.addView(cycleRow());
         root.addView(bandRow());
         root.addView(tempRow());
@@ -131,6 +136,14 @@ public class MainActivity extends Activity {
         actions.setGravity(Gravity.CENTER);
         actions.setPadding(0, dp(8), 0, dp(10));
         actions.addView(pill("ОКЕЙ", VIOLET_BRIGHT, Color.WHITE, new View.OnClickListener() { public void onClick(View v) { save(); } }));
+        actions.addView(pill("90 AUTO", VIOLET, Color.WHITE, new View.OnClickListener() {
+            public void onClick(View v) {
+                final CanClient c = new CanClient(MainActivity.this);
+                c.bind(new CanClient.Ready() { public void onBound() {
+                    log("AUTO: " + c.autoMode());
+                }});
+            }
+        }));
         actions.addView(pill("ПРОВЕРИТЬ СЕЙЧАС", VIOLET, Color.WHITE, new View.OnClickListener() { public void onClick(View v) { testNow(); } }));
         root.addView(actions);
 
@@ -151,22 +164,48 @@ public class MainActivity extends Activity {
 
     private void save() {
         store.save(true, startH, startM, stopH, stopM, repeat, days,
-                target, bandLo, bandHi, defrost);
+                target, bandLo, bandHi, defrost, auto);
         PreheatReceiver.Scheduler.reschedule(this);
         refresh();
         Toast.makeText(this, "Сохранено, будильник поставлен", Toast.LENGTH_SHORT).show();
     }
 
+    /** Runs exactly the sequence the alarm runs, so this button really tests the
+     *  shipped path - including moving the setpoint. Earlier this only called
+     *  openAc(), which is why the setpoint never changed when testing here. */
     private void testNow() {
         final CanClient can = new CanClient(this);
+        final ScheduleStore store = new ScheduleStore(this);
         can.bind(new CanClient.Ready() { public void onBound() {
             CanClient.AirState st = can.queryAir();
-            can.openAc();
-            if (defrost) can.defrost(true);
             showNow(st);
-            log("проверка: салон " + fmtTemp(st.cabinTemp) + ", улица " + fmtTemp(st.outsideTemp)
-                    + ", уставка " + (Float.isNaN(st.setpoint) ? "?" : st.setpoint)
-                    + ", климат включён");
+            float from = st.setpoint;
+
+            boolean ok = auto ? can.autoMode() : can.openAc();
+            log("климат включён: " + ok + (auto ? " (AUTO)" : ""));
+
+            if (!auto) {
+                // AUTO owns the setpoint, so leave it before stepping.
+                can.closeAutoMode();
+                // And the car must report the climate running: S31 ignores the
+                // step while AirSWStatus is off and substitutes 25.0C.
+                boolean on = can.awaitAcOn(4000);
+                log("климат " + (on ? "включился" : "НЕ включился, уставку не трогаю"));
+                if (!on) {
+                    if (defrost) can.defrost(true);
+                    return;
+                }
+            }
+
+            if (!auto && !Float.isNaN(from) && Math.abs(from - store.target()) >= 0.25f) {
+                can.setTempDirect(store.target());
+                log("уставка " + from + " -> задана " + store.target());
+            } else if (auto) {
+                log("в AUTO уставку не трогаем, контур у машины");
+            } else {
+                log("уставка уже " + from + ", не меняю");
+            }
+            if (defrost) can.defrost(true);
         }});
     }
 
@@ -204,6 +243,37 @@ public class MainActivity extends Activity {
      *  the Preheat tag instead, which is what adb logcat -s Preheat reads. */
     private void log(String s) {
         Log.i(CanClient.TAG, "UI: " + s);
+    }
+
+    /** AUTO hands the closed loop to the car; the plain mode drives the setpoint
+     *  ourselves. Both proven to be accepted by the service on 2026-10-04. */
+    private LinearLayout modeRow() {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(dp(14), dp(8), dp(14), 0);
+        row.setBackground(roundRect(CARD, 20));
+        plainBtn = pill("ОБЫЧНЫЙ", CARD, TEXT, new View.OnClickListener() {
+            public void onClick(View v) { auto = false; paintMode(); }
+        });
+        autoBtn = pill("AUTO", VIOLET, Color.WHITE, new View.OnClickListener() {
+            public void onClick(View v) { auto = true; paintMode(); }
+        });
+        row.addView(plainBtn);
+        row.addView(autoBtn);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, dp(76));
+        p.setMargins(dp(14), dp(10), dp(14), 0);
+        row.setLayoutParams(p);
+        paintMode();
+        return row;
+    }
+
+    private void paintMode() {
+        if (plainBtn == null) return;
+        plainBtn.setBackground(roundRect(auto ? CARD : VIOLET, 22));
+        plainBtn.setTextColor(auto ? TEXT : Color.WHITE);
+        autoBtn.setBackground(roundRect(auto ? VIOLET : CARD, 22));
+        autoBtn.setTextColor(auto ? Color.WHITE : TEXT);
     }
 
     private LinearLayout cycleRow() {
